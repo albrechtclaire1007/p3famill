@@ -198,7 +198,7 @@
     background:rgba(205,228,245,.35);
   }
 
-  /* -------- Custom clickable family tree (rebuilt) -------- */
+  /* Custom clickable family tree */
   .famWrap{
     width:min(820px, 92vw);
     border:var(--border) solid var(--blue-dark);
@@ -208,7 +208,6 @@
     box-shadow:0 8px 18px rgba(0,0,0,.08);
     padding:14px;
   }
-
   .famStage{
     position:relative;
     width:100%;
@@ -218,15 +217,12 @@
     border:2px solid rgba(23,60,87,.12);
     overflow:hidden;
   }
-
-  /* Connection lines drawn with SVG behind cards */
   .famLines{
     position:absolute; inset:0;
     z-index:1;
     pointer-events:none;
     opacity:.75;
   }
-
   .personCard{
     position:absolute;
     z-index:2;
@@ -258,10 +254,8 @@
     line-height:1;
     text-align:center;
   }
-
   .personCard.good{ background:rgba(183,240,200,.45); border-color:rgba(183,240,200,.0); }
   .personCard.bad{  background:rgba(255,204,204,.55); border-color:rgba(255,204,204,.0); }
-
 </style>
 </head>
 
@@ -279,17 +273,14 @@
     <section class="card" id="g1">
       <div class="inst">
         <b>Lauschter a klick</b><br/>
-        Lauschter d Wuert a klick op déi richteg Persoun.
+        Wien ass dat?
       </div>
 
       <div class="play">
         <div class="row">
           <div class="col center">
-
             <div class="famWrap">
-              <div class="famStage" id="fam1">
-                <!-- SVG lines injected here -->
-              </div>
+              <div class="famStage" id="fam1"></div>
             </div>
 
             <div class="speakerLine">
@@ -297,7 +288,7 @@
               <button class="audioBtn" id="g1Play" title="Audio">🔊</button>
             </div>
 
-            <div class="qTitle" id="g1Text">Ech sinn d Elisa. Wien ass meng Mamm</div>
+            <div class="qTitle" id="g1Text">Ech sinn d Elisa. Wien ass meng Mamm?</div>
 
             <div class="scoreLine">
               <span class="badge" id="g1Prog">1 vun 20</span>
@@ -312,21 +303,18 @@
     <!-- GAME 2 -->
     <section class="card hidden" id="g2">
       <div class="inst">
-        <b>Wéi heescht</b><br/>
-        Lies de Saz a klick op déi richteg Persoun.
+        <b>Wéi heescht?</b><br/>
+        Wien heescht dat?
       </div>
 
       <div class="play">
         <div class="row">
           <div class="col center">
-
             <div class="famWrap">
-              <div class="famStage" id="fam2">
-                <!-- SVG lines injected here -->
-              </div>
+              <div class="famStage" id="fam2"></div>
             </div>
 
-            <div class="qTitle" id="g2Text">Ech sinn d Elisa, meng Mamm heescht ...</div>
+            <div class="qTitle" id="g2Text">Ech sinn d Elisa, meng Mamm heescht ...?</div>
 
             <div class="scoreLine">
               <span class="badge" id="g2Prog">1 vun 20</span>
@@ -341,8 +329,8 @@
     <!-- GAME 3 -->
     <section class="card hidden" id="g3">
       <div class="inst">
-        <b>Wie sinn ech</b><br/>
-        Lies d Informatioun. Wéi eng Persoun ass dat
+        <b>Wie sinn ech?</b><br/>
+        Wéi eng Persoun ass dat?
       </div>
 
       <div class="play">
@@ -366,15 +354,15 @@
     <!-- GAME 4 -->
     <section class="card hidden" id="g4">
       <div class="inst">
-        <b>Mäin oder meng</b><br/>
-        Wielt dat richtegt Wuert: mäin, meng, däin, deng.
+        <b>Mäin oder meng?</b><br/>
+        Wat ass richteg?
       </div>
 
       <div class="play">
         <div class="row">
           <div class="col">
             <div class="bubble" id="g4Line">
-              Robin: Wéi heescht <span class="slot" id="g4Slot">___</span> Mamm, Elisa
+              Robin: Wéi heescht <span class="slot" id="g4Slot">___</span> Mamm, Elisa?
             </div>
 
             <div class="optGrid" id="g4Options"></div>
@@ -393,14 +381,14 @@
     <section class="card hidden" id="g5">
       <div class="inst">
         <b>Stell Froen</b><br/>
-        Baue eng Fro. Duerch d Äntwert gesäis du ob et richteg ass.
+        Wéi heescht deng Famill?
       </div>
 
       <div class="play">
         <div class="row">
           <div class="col">
             <div class="bubble" id="g5Build">
-              Wéi heescht <span class="slot" id="g5Pron">deng</span> <span class="slot" id="g5Rel">Mamm</span>
+              Wéi heescht <span class="slot" id="g5Pron">deng</span> <span class="slot" id="g5Rel">Mamm</span>?
             </div>
 
             <div class="optGrid" id="g5PronOpts"></div>
@@ -455,37 +443,23 @@ const PEOPLE = {
   robin:  {name:'Robin',  img:'https://i.postimg.cc/ftYcFBFk/robin.png'},
 };
 
-/* Positions (percent of stage). Adjust if you want it closer to the book layout. */
 const POS = {
   rene:    {x:46, y:16},
   katrine: {x:58, y:16},
-
   romain:  {x:18, y:50},
   josiane: {x:36, y:50},
   jean:    {x:58, y:50},
   jeanne:  {x:80, y:50},
-
   elisa:   {x:28, y:82},
   robin:   {x:72, y:82},
 };
 
-/* Connections (for simple visual tree lines).
-   We draw parent-child and couple lines. */
 const LINES = [
-  // René—Katrine couple
   ['rene','katrine'],
-
-  // parents to children: René/Katrine -> Josiane and Jean
   ['katrine','josiane'], ['rene','josiane'],
   ['katrine','jean'],    ['rene','jean'],
-
-  // Romain—Josiane couple
   ['romain','josiane'],
-
-  // Jean—Jeanne couple
   ['jean','jeanne'],
-
-  // parents to kids
   ['romain','elisa'], ['josiane','elisa'],
   ['jean','robin'],   ['jeanne','robin'],
 ];
@@ -543,9 +517,9 @@ function buildFamilyStage(stageEl, onClick){
 /* Top nav */
 const gameTitles = [
   'Lauschter a klick',
-  'Wéi heescht',
-  'Wie sinn ech',
-  'Mäin oder meng',
+  'Wéi heescht?',
+  'Wie sinn ech?',
+  'Mäin oder meng?',
   'Stell Froen'
 ];
 const sections = ['g1','g2','g3','g4','g5'];
@@ -589,9 +563,7 @@ function playWordAudio(key){
   a.play().catch(()=>{});
 }
 
-/* -------------------------
-   GAME 1: audio word -> click correct person
---------------------------*/
+/* GAME 1 */
 const g1 = (()=> {
   let started=false;
   let round=0;
@@ -600,41 +572,35 @@ const g1 = (()=> {
   let current=null;
   let canAnswer=true;
 
-  // only relations that exist in THIS family
   const BANK = [
-    // Elisa
-    {speaker:'elisa', word:'mamm', target:'josiane', text:"Ech sinn d Elisa. Wien ass meng Mamm"},
-    {speaker:'elisa', word:'papp', target:'romain',  text:"Ech sinn d Elisa. Wien ass mäi Papp"},
-    {speaker:'elisa', word:'bom',  target:'katrine', text:"Ech sinn d Elisa. Wien ass meng Bom"},
-    {speaker:'elisa', word:'bop',  target:'rene',    text:"Ech sinn d Elisa. Wien ass mäi Bop"},
-    {speaker:'elisa', word:'monni',target:'jean',    text:"Ech sinn d Elisa. Wien ass mäi Monni"},
-    {speaker:'elisa', word:'tatta',target:'jeanne',  text:"Ech sinn d Elisa. Wien ass meng Tatta"},
-    {speaker:'elisa', word:'cousin', target:'robin', text:"Ech sinn d Elisa. Wien ass mäi Cousin"},
+    {speaker:'elisa', word:'mamm', target:'josiane', text:"Ech sinn d Elisa. Wien ass meng Mamm?"},
+    {speaker:'elisa', word:'papp', target:'romain',  text:"Ech sinn d Elisa. Wien ass mäi Papp?"},
+    {speaker:'elisa', word:'bom',  target:'katrine', text:"Ech sinn d Elisa. Wien ass meng Bom?"},
+    {speaker:'elisa', word:'bop',  target:'rene',    text:"Ech sinn d Elisa. Wien ass mäi Bop?"},
+    {speaker:'elisa', word:'monni',target:'jean',    text:"Ech sinn d Elisa. Wien ass mäi Monni?"},
+    {speaker:'elisa', word:'tatta',target:'jeanne',  text:"Ech sinn d Elisa. Wien ass meng Tatta?"},
+    {speaker:'elisa', word:'cousin', target:'robin', text:"Ech sinn d Elisa. Wien ass mäi Cousin?"},
 
-    // Robin
-    {speaker:'robin', word:'mamm', target:'jeanne',  text:"Ech sinn de Robin. Wien ass meng Mamm"},
-    {speaker:'robin', word:'papp', target:'jean',    text:"Ech sinn de Robin. Wien ass mäi Papp"},
-    {speaker:'robin', word:'bom',  target:'katrine', text:"Ech sinn de Robin. Wien ass meng Bom"},
-    {speaker:'robin', word:'bop',  target:'rene',    text:"Ech sinn de Robin. Wien ass mäi Bop"},
-    {speaker:'robin', word:'monni',target:'romain',  text:"Ech sinn de Robin. Wien ass mäi Monni"},
-    {speaker:'robin', word:'tatta',target:'josiane', text:"Ech sinn de Robin. Wien ass meng Tatta"},
-    {speaker:'robin', word:'cousine', target:'elisa',text:"Ech sinn de Robin. Wien ass meng Cousine"},
+    {speaker:'robin', word:'mamm', target:'jeanne',  text:"Ech sinn de Robin. Wien ass meng Mamm?"},
+    {speaker:'robin', word:'papp', target:'jean',    text:"Ech sinn de Robin. Wien ass mäi Papp?"},
+    {speaker:'robin', word:'bom',  target:'katrine', text:"Ech sinn de Robin. Wien ass meng Bom?"},
+    {speaker:'robin', word:'bop',  target:'rene',    text:"Ech sinn de Robin. Wien ass mäi Bop?"},
+    {speaker:'robin', word:'monni',target:'romain',  text:"Ech sinn de Robin. Wien ass mäi Monni?"},
+    {speaker:'robin', word:'tatta',target:'josiane', text:"Ech sinn de Robin. Wien ass meng Tatta?"},
+    {speaker:'robin', word:'cousine', target:'elisa',text:"Ech sinn de Robin. Wien ass meng Cousine?"},
 
-    // Jean
-    {speaker:'jean', word:'mamm', target:'katrine',  text:"Ech sinn de Jean. Wien ass meng Mamm"},
-    {speaker:'jean', word:'papp', target:'rene',     text:"Ech sinn de Jean. Wien ass mäi Papp"},
-    {speaker:'jean', word:'fra',  target:'jeanne',   text:"Ech sinn de Jean. Wien ass meng Fra"},
-    {speaker:'jean', word:'bouf', target:'robin',    text:"Ech sinn de Jean. Wien ass mäi Bouf"},
+    {speaker:'jean', word:'mamm', target:'katrine',  text:"Ech sinn de Jean. Wien ass meng Mamm?"},
+    {speaker:'jean', word:'papp', target:'rene',     text:"Ech sinn de Jean. Wien ass mäi Papp?"},
+    {speaker:'jean', word:'fra',  target:'jeanne',   text:"Ech sinn de Jean. Wien ass meng Fra?"},
+    {speaker:'jean', word:'bouf', target:'robin',    text:"Ech sinn de Jean. Wien ass mäi Bouf?"},
 
-    // Josiane
-    {speaker:'josiane', word:'mamm', target:'katrine', text:"Ech sinn d Josiane. Wien ass meng Mamm"},
-    {speaker:'josiane', word:'papp', target:'rene',    text:"Ech sinn d Josiane. Wien ass mäi Papp"},
-    {speaker:'josiane', word:'mann', target:'romain',  text:"Ech sinn d Josiane. Wien ass mäi Mann"},
-    {speaker:'josiane', word:'duechter', target:'elisa',text:"Ech sinn d Josiane. Wien ass meng Duechter"},
+    {speaker:'josiane', word:'mamm', target:'katrine', text:"Ech sinn d Josiane. Wien ass meng Mamm?"},
+    {speaker:'josiane', word:'papp', target:'rene',    text:"Ech sinn d Josiane. Wien ass mäi Papp?"},
+    {speaker:'josiane', word:'mann', target:'romain',  text:"Ech sinn d Josiane. Wien ass mäi Mann?"},
+    {speaker:'josiane', word:'duechter', target:'elisa',text:"Ech sinn d Josiane. Wien ass meng Duechter?"},
 
-    // Jeanne
-    {speaker:'jeanne', word:'mann', target:'jean',    text:"Ech sinn d Jeanne. Wien ass mäi Mann"},
-    {speaker:'jeanne', word:'bouf', target:'robin',   text:"Ech sinn d Jeanne. Wien ass mäi Bouf"},
+    {speaker:'jeanne', word:'mann', target:'jean',    text:"Ech sinn d Jeanne. Wien ass mäi Mann?"},
+    {speaker:'jeanne', word:'bouf', target:'robin',   text:"Ech sinn d Jeanne. Wien ass mäi Bouf?"},
   ];
 
   function buildItems(){
@@ -680,24 +646,16 @@ const g1 = (()=> {
   function ensure(){
     if(started) return;
     started=true;
-
     buildFamilyStage($('#fam1'), handleClick);
-
-    $('#g1Play').addEventListener('click', ()=>{
-      if(!current) return;
-      playWordAudio(current.word);
-    });
+    $('#g1Play').addEventListener('click', ()=>{ if(current) playWordAudio(current.word); });
     $('#g1Restart').addEventListener('click', restart);
-
     restart();
   }
 
   return {ensure};
 })();
 
-/* -------------------------
-   GAME 2: text prompt -> click correct person
---------------------------*/
+/* GAME 2 */
 const g2 = (()=> {
   let started=false;
   let round=0;
@@ -707,7 +665,6 @@ const g2 = (()=> {
   let canAnswer=true;
 
   const BANK = [
-    // Elisa
     {text:"Ech sinn d Elisa, meng Mamm heescht", target:'josiane'},
     {text:"Ech sinn d Elisa, mäi Papp heescht", target:'romain'},
     {text:"Ech sinn d Elisa, meng Bom heescht", target:'katrine'},
@@ -716,7 +673,6 @@ const g2 = (()=> {
     {text:"Ech sinn d Elisa, meng Tatta heescht", target:'jeanne'},
     {text:"Ech sinn d Elisa, mäi Cousin heescht", target:'robin'},
 
-    // Robin
     {text:"Ech sinn de Robin, meng Mamm heescht", target:'jeanne'},
     {text:"Ech sinn de Robin, mäi Papp heescht", target:'jean'},
     {text:"Ech sinn de Robin, meng Bom heescht", target:'katrine'},
@@ -725,19 +681,16 @@ const g2 = (()=> {
     {text:"Ech sinn de Robin, meng Tatta heescht", target:'josiane'},
     {text:"Ech sinn de Robin, meng Cousine heescht", target:'elisa'},
 
-    // Jean
     {text:"Ech sinn de Jean, meng Mamm heescht", target:'katrine'},
     {text:"Ech sinn de Jean, mäi Papp heescht", target:'rene'},
     {text:"Ech sinn de Jean, meng Fra heescht", target:'jeanne'},
     {text:"Ech sinn de Jean, mäi Bouf heescht", target:'robin'},
 
-    // Josiane
     {text:"Ech sinn d Josiane, meng Mamm heescht", target:'katrine'},
     {text:"Ech sinn d Josiane, mäi Papp heescht", target:'rene'},
     {text:"Ech sinn d Josiane, mäi Mann heescht", target:'romain'},
     {text:"Ech sinn d Josiane, meng Duechter heescht", target:'elisa'},
 
-    // Jeanne
     {text:"Ech sinn d Jeanne, mäi Mann heescht", target:'jean'},
     {text:"Ech sinn d Jeanne, mäi Bouf heescht", target:'robin'},
   ];
@@ -752,7 +705,7 @@ const g2 = (()=> {
     current = items[round];
     $('#g2Prog').textContent = `${round+1} vun ${total}`;
     $('#g2Status').textContent = 'Klick';
-    $('#g2Text').textContent = current.text + ' ...';
+    $('#g2Text').textContent = current.text + ' ...?';
     canAnswer = true;
   }
 
@@ -784,9 +737,7 @@ const g2 = (()=> {
   function ensure(){
     if(started) return;
     started=true;
-
     buildFamilyStage($('#fam2'), handleClick);
-
     $('#g2Restart').addEventListener('click', restart);
     restart();
   }
@@ -794,9 +745,7 @@ const g2 = (()=> {
   return {ensure};
 })();
 
-/* -------------------------
-   GAME 3: Wie sinn ech
---------------------------*/
+/* GAME 3 */
 const g3 = (()=> {
   let started=false;
   let round=0;
@@ -888,9 +837,7 @@ const g3 = (()=> {
   return {ensure};
 })();
 
-/* -------------------------
-   GAME 4: Mäin / Meng / Däin / Deng (new dialogue)
---------------------------*/
+/* GAME 4 */
 const g4 = (()=> {
   let started=false;
   let round=0;
@@ -902,22 +849,22 @@ const g4 = (()=> {
   const CHOICES = ['mäin','meng','däin','deng'];
 
   const BANK = [
-    {line:"Robin: Wéi heescht ___ Mamm, Elisa", correct:"deng"},
-    {line:"Elisa: ___ Mamm heescht Josiane", correct:"meng"},
-    {line:"Elisa: Wéi heescht ___ Papp, Robin", correct:"däin"},
-    {line:"Robin: ___ Papp heescht Jean", correct:"mäin"},
-    {line:"Robin: Wéi heescht ___ Bom, Elisa", correct:"deng"},
-    {line:"Elisa: ___ Bom heescht Katrine", correct:"meng"},
-    {line:"Elisa: Wéi heescht ___ Bop, Robin", correct:"däin"},
-    {line:"Robin: ___ Bop heescht René", correct:"mäin"},
-    {line:"Robin: Ass dat ___ Cousine", correct:"deng"},
-    {line:"Elisa: Jo, dat ass ___ Cousin", correct:"mäin"},
-    {line:"Elisa: Ass dat ___ Monni", correct:"däin"},
-    {line:"Robin: Jo, dat ass ___ Tatta", correct:"meng"},
-    {line:"Elisa: Dat ass ___ Papp", correct:"mäin"},
-    {line:"Robin: Dat ass ___ Mamm", correct:"meng"},
-    {line:"Elisa: Dat ass ___ Bouf", correct:"däin"},
-    {line:"Robin: Dat ass ___ Duechter", correct:"deng"},
+    {line:"Robin: Wéi heescht ___ Mamm, Elisa?", correct:"deng"},
+    {line:"Elisa: ___ Mamm heescht Josiane.", correct:"meng"},
+    {line:"Elisa: Wéi heescht ___ Papp, Robin?", correct:"däin"},
+    {line:"Robin: ___ Papp heescht Jean.", correct:"mäin"},
+    {line:"Robin: Wéi heescht ___ Bom, Elisa?", correct:"deng"},
+    {line:"Elisa: ___ Bom heescht Katrine.", correct:"meng"},
+    {line:"Elisa: Wéi heescht ___ Bop, Robin?", correct:"däin"},
+    {line:"Robin: ___ Bop heescht René.", correct:"mäin"},
+    {line:"Robin: Ass dat ___ Cousine?", correct:"deng"},
+    {line:"Elisa: Jo, dat ass ___ Cousin.", correct:"mäin"},
+    {line:"Elisa: Ass dat ___ Monni?", correct:"däin"},
+    {line:"Robin: Jo, dat ass ___ Tatta.", correct:"meng"},
+    {line:"Elisa: Dat ass ___ Papp.", correct:"mäin"},
+    {line:"Robin: Dat ass ___ Mamm.", correct:"meng"},
+    {line:"Elisa: Dat ass ___ Bouf.", correct:"däin"},
+    {line:"Robin: Dat ass ___ Duechter.", correct:"deng"},
   ];
 
   function buildItems(){
@@ -977,9 +924,7 @@ const g4 = (()=> {
   return {ensure};
 })();
 
-/* -------------------------
-   GAME 5: Stell Froen
---------------------------*/
+/* GAME 5 */
 const g5 = (()=> {
   let started=false;
   let round=0;
@@ -1047,12 +992,10 @@ const g5 = (()=> {
     const correctName = ANSWERS[state.askTo][state.rel];
     const fem = ['Mamm','Bom','Tatta','Cousine'];
     const expectedPron = fem.includes(state.rel) ? 'deng' : 'däin';
-
     const okPron = (state.pron === expectedPron);
 
     const answerBox = $('#g5Answer');
     answerBox.style.display='block';
-
     const model = fem.includes(state.rel) ? 'Meng' : 'Mäi';
 
     if(okPron){
@@ -1098,4 +1041,3 @@ showGame(0);
 </script>
 </body>
 </html>
-
