@@ -1,1043 +1,715 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="lb">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>P3 Famill Spiller</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>P3 – Auer: Üben & Spiller + Quiz</title>
 
 <style>
-  @font-face{
-    font-family:'Schoulschrëft';
-    src:url('https://raw.githubusercontent.com/albrechtclaire1007/schoulschreft/main/schoulschreft_bold%5B2%5D.TTF') format('truetype');
-    font-weight:bold; font-display:swap;
-  }
+@font-face{
+  font-family:'Schoulschrëft';
+  src:url('https://raw.githubusercontent.com/albrechtclaire1007/schoulschreft/main/schoulschreft_bold%5B2%5D.TTF') format('truetype');
+  font-weight:bold; font-display:swap;
+}
 
-  :root{
-    --blue-mid:#8ab6d9; --blue-light:#cde4f5; --blue-dark:#4f7ca0;
-    --ink:#173c57; --white:#fff; --ok:#b7f0c8; --bad:#ffcccc;
-    --border:3px;
-    --shadow: 0 10px 28px rgba(0,0,0,.10);
-  }
+:root{
+  --bg1:#E7F5FF;
+  --bg2:#CFEAFF;
 
-  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; outline:none;}
-  html,body{
-    height:100%; margin:0;
-    background:linear-gradient(135deg,var(--blue-light) 0%,var(--blue-mid) 50%,var(--blue-dark) 100%);
-    color:var(--ink);
-    font-family:'Schoulschrëft', Arial, sans-serif;
-  }
+  --bar:#6FAFE6;
+  --barBorder:#4D90CD;
 
-  .top{
-    position:sticky; top:8px; z-index:20;
-    display:flex; gap:10px; align-items:center; justify-content:center;
-    background:var(--white);
-    border:var(--border) solid var(--blue-dark);
-    border-radius:18px;
-    padding:.35rem .6rem;
-    margin:10px auto;
-    width:min(980px, 96vw);
-    box-shadow:var(--shadow);
-  }
-  .iconBtn{
-    border:var(--border) solid var(--ink);
-    background:var(--white);
-    color:var(--ink);
-    padding:.25rem .7rem;
-    border-radius:14px;
-    cursor:pointer;
-    font-size:1.55rem;
-    line-height:1;
-    min-width:2.6rem;
-    display:grid; place-items:center;
-  }
-  .iconBtn:active{ transform:scale(.98); }
-  .titleTop{
-    flex:1;
-    text-align:center;
-    font-size:1.25rem;
-    opacity:.95;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
+  --ink:#1f1f1f;
+  --white:#fff;
 
-  .wrap{
-    min-height:100%;
-    display:flex; flex-direction:column; align-items:center;
-    gap:2.2vmin;
-    padding:2.5vmin 3vmin 4vmin;
-  }
+  --border:3px;
+  --shadow:0 10px 24px rgba(0,0,0,.08);
+  --pad:clamp(10px,2.2vw,16px);
+  --r:18px;
 
-  h1{
-    margin:.2rem 0 0;
-    text-align:center;
-    font-size:clamp(1.7rem,5.5vmin,3.4rem);
-    color:var(--ink);
-  }
+  --iconArrow:"https://i.postimg.cc/QBYTSN08/p3arrow.png";
+  --iconReplay:"https://i.postimg.cc/ft30P4rQ/p3replay.png";
 
-  .card{
-    width:min(980px, 96vw);
-    background:var(--white);
-    border:var(--border) solid var(--blue-dark);
-    border-radius:22px;
-    box-shadow:var(--shadow);
-    padding:clamp(12px,2.2vmin,20px);
-  }
-  .hidden{display:none !important;}
+  --red:#f1583f;
+  --blue:#75b7cb;
+  --face:url('https://i.postimg.cc/6qC1Vnjg/temp-Imagel6-ZZRm.avif');
 
-  .inst{
-    border:var(--border) dashed var(--blue-dark);
-    background:rgba(205,228,245,.45);
-    border-radius:18px;
-    padding:12px 14px;
-    font-size:clamp(1.05rem,2.4vmin,1.25rem);
-    line-height:1.15;
-  }
+  --ok:#b7f0c8;
+  --bad:#ffcccc;
 
-  .play{ margin-top:14px; }
-  .row{display:flex; gap:14px; flex-wrap:wrap; align-items:stretch; justify-content:center;}
-  .col{flex:1 1 340px; min-width:280px;}
-  .center{display:grid; place-items:center;}
+  --btn-r:18px;
+}
 
-  .btn{
-    border:var(--border) solid var(--ink);
-    background:var(--white);
-    color:var(--ink);
-    padding:.55rem .95rem;
-    border-radius:16px;
-    cursor:pointer;
-    font-size:1.12rem;
-    font-family:'Schoulschrëft', Arial, sans-serif;
-    box-shadow:0 5px 16px rgba(0,0,0,.07);
-  }
-  .btn:active{ transform:scale(.98); }
-  .btnPrimary{
-    background:linear-gradient(180deg,#ffffff 0%, #f3fbff 100%);
-    border-color:var(--blue-dark);
-  }
-  .btnSmall{font-size:1rem; padding:.45rem .75rem; border-radius:14px;}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+body{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(135deg,var(--bg2),var(--bg1));
+  color:var(--ink);
+  font-family:'Schoulschrëft', Arial, sans-serif;
+}
 
-  .flash-good{ background:var(--ok)!important; border-color:var(--ok)!important; }
-  .flash-bad{ background:var(--bad)!important; border-color:var(--bad)!important; }
+.hidden{display:none!important;}
 
-  .scoreLine{
-    display:flex; justify-content:space-between; align-items:center;
-    gap:10px; flex-wrap:wrap;
-    margin-top:12px;
-  }
-  .badge{
-    border:var(--border) solid var(--ink);
-    background:#fff;
-    border-radius:999px;
-    padding:8px 12px;
-    font-size:1.1rem;
-    box-shadow:0 6px 16px rgba(0,0,0,.08);
-  }
-  .muted{opacity:.75;}
+/* ===== TOP BAR (ONLY arrows + tabs; NO play/replay) ===== */
+.topbar{
+  position:sticky; top:10px; z-index:10;
+  width:min(1200px,96vw);
+  margin:10px auto 0;
+  background:var(--bar);
+  border:var(--border) solid var(--barBorder);
+  border-radius:999px;
+  box-shadow:var(--shadow);
+  padding:10px 12px;
 
-  .qTitle{
-    font-size:1.35rem;
-    margin-top:10px;
-    text-align:center;
-    line-height:1.15;
-  }
+  display:grid;
+  grid-template-columns: 64px 1fr 64px;
+  align-items:center;
+  gap:10px;
+}
 
-  .speakerLine{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    justify-content:center;
-    flex-wrap:wrap;
-    margin-top:10px;
-  }
-  .avatar{
-    width:54px; height:54px;
-    border-radius:16px;
-    border:var(--border) solid var(--ink);
-    background:#fff;
-    object-fit:cover;
-  }
-  .audioBtn{
-    display:inline-grid;
-    place-items:center;
-    width:54px;
-    height:54px;
-    border-radius:16px;
-    border:var(--border) solid var(--ink);
-    background:linear-gradient(180deg,#ffffff 0%, #f3fbff 100%);
-    cursor:pointer;
-    font-size:1.55rem;
-    box-shadow:0 6px 16px rgba(0,0,0,.08);
-  }
-  .audioBtn:active{ transform:scale(.98); }
+.navBtn{
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  width:54px; height:54px;
+}
+.navBtn:active{transform:scale(.98);}
+.navBtn img{width:46px; height:46px; object-fit:contain;}
+.navBtn.back img{transform:rotate(180deg);}
 
-  .optGrid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
-    gap:12px;
-    margin-top:10px;
-  }
+.tabs{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+}
 
-  .bubble{
-    border:var(--border) solid var(--ink);
-    border-radius:18px;
-    padding:12px 14px;
-    background:linear-gradient(180deg,#fff 0%, #f7fbff 100%);
-    box-shadow:0 6px 16px rgba(0,0,0,.08);
-    font-size:1.2rem;
-    line-height:1.15;
-  }
+.tab{
+  font-family:'Schoulschrëft', Arial, sans-serif;
+  background:rgba(255,255,255,.92);
+  border:var(--border) solid rgba(255,255,255,.65);
+  border-radius:999px;
+  padding:10px 14px;
+  font-size:clamp(1.05rem,2.2vw,1.25rem);
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  transition:transform .08s ease, background .15s ease;
+}
+.tab:active{transform:scale(.98);}
+.tab.active{
+  background:#fff;
+  outline:3px solid rgba(0,0,0,.18);
+}
 
-  .slot{
-    display:inline-block;
-    min-width:84px;
-    padding:2px 10px;
-    border-radius:12px;
-    border:2px dashed rgba(23,60,87,.45);
-    text-align:center;
-    background:rgba(205,228,245,.35);
-  }
+/* ===== CONTENT AREA ===== */
+.section{
+  display:none;
+  width:min(1200px,96vw);
+  margin:18px auto 26px;
+  padding:var(--pad);
+}
+.section.active{display:block;}
 
-  /* Custom clickable family tree */
-  .famWrap{
-    width:min(820px, 92vw);
-    border:var(--border) solid var(--blue-dark);
-    border-radius:18px;
-    overflow:hidden;
-    background:#fff;
-    box-shadow:0 8px 18px rgba(0,0,0,.08);
-    padding:14px;
-  }
-  .famStage{
-    position:relative;
-    width:100%;
-    aspect-ratio: 4 / 3;
-    border-radius:14px;
-    background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);
-    border:2px solid rgba(23,60,87,.12);
-    overflow:hidden;
-  }
-  .famLines{
-    position:absolute; inset:0;
-    z-index:1;
-    pointer-events:none;
-    opacity:.75;
-  }
-  .personCard{
-    position:absolute;
-    z-index:2;
-    width:16%;
-    min-width:92px;
-    max-width:150px;
-    transform:translate(-50%,-50%);
-    border:var(--border) solid var(--ink);
-    border-radius:14px;
-    background:#fff;
-    box-shadow:0 6px 16px rgba(0,0,0,.08);
-    cursor:pointer;
-    padding:8px;
-    display:grid;
-    gap:6px;
-    justify-items:center;
-  }
-  .personCard:active{ transform:translate(-50%,-50%) scale(.99); }
-  .personCard img{
-    width:100%;
-    aspect-ratio: 1 / 1;
-    object-fit:cover;
-    border-radius:10px;
-    border:2px solid rgba(23,60,87,.12);
-    background:#fff;
-  }
-  .personName{
-    font-size:1.05rem;
-    line-height:1;
-    text-align:center;
-  }
-  .personCard.good{ background:rgba(183,240,200,.45); border-color:rgba(183,240,200,.0); }
-  .personCard.bad{  background:rgba(255,204,204,.55); border-color:rgba(255,204,204,.0); }
+.card{
+  background:rgba(255,255,255,.8);
+  border:var(--border) solid rgba(255,255,255,.65);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  padding:clamp(12px,2.2vw,18px);
+}
+
+.center{text-align:center;}
+.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mt20{margin-top:20px}
+.row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;}
+
+.chip{
+  display:inline-block;
+  padding:10px 16px;
+  border-radius:16px;
+  border:var(--border) solid rgba(0,0,0,.18);
+  background:rgba(255,255,255,.95);
+  font-size:clamp(1.4rem,3vw,2rem);
+  box-shadow:0 6px 16px rgba(0,0,0,.06);
+}
+
+.btn{
+  font-family:'Schoulschrëft',Arial,sans-serif;
+  border:var(--border) solid rgba(0,0,0,.25);
+  background:#fff;
+  border-radius:var(--btn-r);
+  padding:10px 20px;
+  font-size:clamp(1.1rem,2.4vw,1.4rem);
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+.btn:active{transform:scale(.98);}
+.btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+/* ===== replay icon button (used to replace “Neistarten”) ===== */
+.iconReplayBtn{
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  width:54px; height:54px;
+  padding:0;
+}
+.iconReplayBtn:active{transform:scale(.98);}
+.iconReplayBtn img{width:46px; height:46px; object-fit:contain; filter:drop-shadow(0 6px 12px rgba(0,0,0,.12));}
+
+/* clock */
+.clock-wrap{display:flex;flex-direction:column;align-items:center;}
+.clock{
+  position:relative;
+  width:min(360px, 86vw);
+  height:min(360px, 86vw);
+  background:#fff center/contain no-repeat;
+  background-image:var(--face);
+  border-radius:50%;
+  margin:14px auto 10px;
+  box-shadow:var(--shadow);
+  border:8px solid rgba(255,255,255,.7);
+  outline:3px solid rgba(0,0,0,.12);
+  touch-action:none;
+}
+
+.tick{
+  position:absolute;
+  width:44px;height:44px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  pointer-events:none;
+}
+.flash-green{animation:greenflash 900ms ease-in-out 1;}
+@keyframes greenflash{
+  0%{box-shadow:0 0 0 0 rgba(0,160,0,0);background:transparent;}
+  25%{box-shadow:0 0 0 6px rgba(0,160,0,.15);background:rgba(0,200,0,.08);}
+  55%{box-shadow:0 0 0 10px rgba(0,160,0,.22);background:rgba(0,200,0,.12);}
+  100%{box-shadow:0 0 0 0 rgba(0,160,0,0);background:transparent;}
+}
+
+.hand{
+  position:absolute;left:50%;top:50%;
+  transform-origin:50% 100%;
+  border-radius:8px;
+  touch-action:none;
+  cursor:grab;
+  z-index:1;
+  box-shadow:0 6px 14px rgba(0,0,0,.10);
+}
+.min{
+  width:6px;height:150px;
+  background:var(--blue);
+  transform:translate(-50%,-100%) rotate(0deg);
+  z-index:2;
+}
+.hour{
+  width:8px;height:110px;
+  background:var(--red);
+  transform:translate(-50%,-100%) rotate(0deg);
+  z-index:3;
+}
+.ghost{opacity:.6}
+.pivot{
+  position:absolute;left:50%;top:50%;
+  width:18px;height:18px;
+  background:#fff;
+  border:4px solid var(--red);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  z-index:4;
+  box-shadow:0 6px 14px rgba(0,0,0,.10);
+}
+
+.readout{
+  font-size:clamp(1.25rem,2.7vw,1.6rem);
+  min-height:32px;
+}
+
+/* quiz layout */
+.options{display:flex;flex-direction:column;gap:10px;max-width:760px;margin:0 auto;}
+.opt-btn{text-align:left;}
+.quiz-actions{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
+.quiz-feedback{min-height:32px;font-size:clamp(1.2rem,2.6vw,1.5rem);text-align:center;margin-top:8px;}
+
+.helper{
+  margin:.4rem 0 0;
+  text-align:center;
+  font-size:clamp(1rem,2.2vw,1.15rem);
+  opacity:.85;
+}
+
+@media (max-width:480px){
+  .tick{width:36px;height:36px}
+  .hour{height:92px}
+  .min{height:128px}
+}
 </style>
 </head>
 
 <body>
-  <div class="top">
-    <button class="iconBtn" id="prevBtn" title="Zréck">‹</button>
-    <div class="titleTop" id="topTitle">Famill</div>
-    <button class="iconBtn" id="nextBtn" title="Weider">›</button>
+
+<!-- TOP BAR: arrows + tabs -->
+<div class="topbar">
+  <button class="navBtn back" id="prevBar" aria-label="Virdrun">
+    <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
+  </button>
+
+  <div class="tabs" role="tablist" aria-label="Spiller wielen">
+    <button class="tab active" data-target="aueren" role="tab" aria-selected="true">Auer üben</button>
+    <button class="tab" data-target="spill1" role="tab" aria-selected="false">1. Spill – Hallwer</button>
+    <button class="tab" data-target="spill2" role="tab" aria-selected="false">2. Spill – D’Zäit astellen</button>
+    <button class="tab" data-target="spill3" role="tab" aria-selected="false">3. Spill – Quiz</button>
   </div>
 
-  <div class="wrap">
-    <h1>Meng Famill</h1>
+  <button class="navBtn" id="nextBar" aria-label="Nächst">
+    <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
+  </button>
+</div>
 
-    <!-- GAME 1 -->
-    <section class="card" id="g1">
-      <div class="inst">
-        <b>Lauschter a klick</b><br/>
-        Wien ass dat?
+<!-- Auer üben -->
+<section id="aueren" class="section active">
+  <div class="card">
+    <div class="center">
+      <div class="chip">Probéier e puer Auerzäiten aus</div>
+      <div class="mt12">
+        <label style="font-size:clamp(1.05rem,2.2vw,1.25rem)">
+          <input type="checkbox" id="toggleDigital" checked>
+          Digital Auer uweisen
+        </label>
       </div>
-
-      <div class="play">
-        <div class="row">
-          <div class="col center">
-            <div class="famWrap">
-              <div class="famStage" id="fam1"></div>
-            </div>
-
-            <div class="speakerLine">
-              <img class="avatar" id="g1SpeakerImg" alt="Speaker"/>
-              <button class="audioBtn" id="g1Play" title="Audio">🔊</button>
-            </div>
-
-            <div class="qTitle" id="g1Text">Ech sinn d Elisa. Wien ass meng Mamm?</div>
-
-            <div class="scoreLine">
-              <span class="badge" id="g1Prog">1 vun 20</span>
-              <button class="btn btnSmall" id="g1Restart">Neistarten</button>
-              <span class="badge muted" id="g1Status">Lauschter</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GAME 2 -->
-    <section class="card hidden" id="g2">
-      <div class="inst">
-        <b>Wéi heescht?</b><br/>
-        Wien heescht dat?
-      </div>
-
-      <div class="play">
-        <div class="row">
-          <div class="col center">
-            <div class="famWrap">
-              <div class="famStage" id="fam2"></div>
-            </div>
-
-            <div class="qTitle" id="g2Text">Ech sinn d Elisa, meng Mamm heescht ...?</div>
-
-            <div class="scoreLine">
-              <span class="badge" id="g2Prog">1 vun 20</span>
-              <button class="btn btnSmall" id="g2Restart">Neistarten</button>
-              <span class="badge muted" id="g2Status">Klick</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GAME 3 -->
-    <section class="card hidden" id="g3">
-      <div class="inst">
-        <b>Wie sinn ech?</b><br/>
-        Wéi eng Persoun ass dat?
-      </div>
-
-      <div class="play">
-        <div class="row">
-          <div class="col">
-            <div class="bubble" id="g3Clue">De Jean ass mäi Brudder. Ech sinn e Jong.</div>
-            <div class="scoreLine">
-              <span class="badge" id="g3Prog">1 vun 20</span>
-              <button class="btn btnSmall" id="g3Restart">Neistarten</button>
-              <span class="badge muted" id="g3Status">Wielt</span>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="optGrid" id="g3Options"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GAME 4 -->
-    <section class="card hidden" id="g4">
-      <div class="inst">
-        <b>Mäin oder meng?</b><br/>
-        Wat ass richteg?
-      </div>
-
-      <div class="play">
-        <div class="row">
-          <div class="col">
-            <div class="bubble" id="g4Line">
-              Robin: Wéi heescht <span class="slot" id="g4Slot">___</span> Mamm, Elisa?
-            </div>
-
-            <div class="optGrid" id="g4Options"></div>
-
-            <div class="scoreLine">
-              <span class="badge" id="g4Prog">1 vun 16</span>
-              <button class="btn btnSmall" id="g4Restart">Neistarten</button>
-              <span class="badge muted" id="g4Status">Wielt</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GAME 5 -->
-    <section class="card hidden" id="g5">
-      <div class="inst">
-        <b>Stell Froen</b><br/>
-        Wéi heescht deng Famill?
-      </div>
-
-      <div class="play">
-        <div class="row">
-          <div class="col">
-            <div class="bubble" id="g5Build">
-              Wéi heescht <span class="slot" id="g5Pron">deng</span> <span class="slot" id="g5Rel">Mamm</span>?
-            </div>
-
-            <div class="optGrid" id="g5PronOpts"></div>
-            <div class="optGrid" id="g5RelOpts" style="margin-top:12px;"></div>
-
-            <div class="bubble" id="g5Answer" style="margin-top:12px; display:none;"></div>
-
-            <div class="scoreLine">
-              <span class="badge" id="g5Prog">1 vun 16</span>
-              <button class="btn btnSmall" id="g5Restart">Neistarten</button>
-              <button class="btn btnSmall" id="g5Check">Kontrolléieren</button>
-              <span class="badge muted" id="g5Status">Baue</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    </div>
+    <div class="clock-wrap mt16">
+      <div id="c1" class="clock"></div>
+      <div id="c1readout" class="readout center">12:00</div>
+    </div>
   </div>
+</section>
+
+<!-- 1. Spill – Hallwer -->
+<section id="spill1" class="section">
+  <div class="card">
+    <div class="center">
+      <div class="chip">Beweeg <b>de Minuttenzär</b> bis bei déi nächst voll Stonn</div>
+    </div>
+    <div class="clock-wrap mt16">
+      <div id="c2" class="clock"></div>
+      <div class="center mt12">
+        <!-- REPLACED: text button -> replay icon button -->
+        <button class="iconReplayBtn" id="nextHallwer" title="Neistarten / Nächst Beispill" aria-label="Neistarten">
+          <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
+        </button>
+      </div>
+      <div id="hFeedback" class="readout center"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Spill – D’Zäit astellen -->
+<section id="spill2" class="section">
+  <div class="card">
+    <div class="center">
+      <button class="btn" id="pEnableAudio" style="display:none">🔊 Audio aktivéieren</button>
+    </div>
+    <div class="clock-wrap mt16">
+      <div id="c3" class="clock"></div>
+      <div class="row mt12">
+        <button class="btn" id="pReplay" disabled title="⟲ Nach eng Kéier lauschteren">⟲ Nach eng Kéier lauschteren</button>
+        <button class="btn" id="pValidate">Validéieren</button>
+      </div>
+      <div class="readout center" id="pFeedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Spill – Quiz -->
+<section id="spill3" class="section">
+  <div class="card">
+    <div class="center">
+      <div class="chip">Wéi vill Auer ass et?</div>
+    </div>
+    <div class="clock-wrap mt16">
+      <div id="c4" class="clock"></div>
+      <div class="options mt12" id="quizOptions"></div>
+      <div class="quiz-actions">
+        <button class="btn" id="quizRetry" disabled>Probéier nach eemol</button>
+        <button class="btn" id="quizNext" disabled>Weider</button>
+      </div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>
+  </div>
+</section>
 
 <script>
-const $ = (sel, root=document)=>root.querySelector(sel);
-const $$ = (sel, root=document)=>Array.from(root.querySelectorAll(sel));
-
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
+/* ---------- shared helpers ---------- */
+function setHand(el,deg){ el.style.transform=`translate(-50%,-100%) rotate(${deg}deg)`; el.dataset.deg=deg }
+function degFromPointer(e, clockEl){
+  const r=clockEl.getBoundingClientRect();
+  const cx=r.left+r.width/2, cy=r.top+r.height/2;
+  const px=(e.touches?e.touches[0].clientX:e.clientX);
+  const py=(e.touches?e.touches[0].clientY:e.clientY);
+  let d=Math.atan2(py-cy, px-cx)*180/Math.PI + 90;
+  if(d<0) d+=360;
+  return d;
+}
+function placeTicks(clockEl){
+  clockEl.querySelectorAll('.tick').forEach(t=>t.remove());
+  const rect=clockEl.getBoundingClientRect();
+  const radius = rect.width/2 - 24;
+  const cx=rect.width/2, cy=rect.height/2;
+  for(let n=1;n<=12;n++){
+    const ang=(n-3)*(Math.PI*2)/12;
+    const x=cx + radius*Math.cos(ang);
+    const y=cy + radius*Math.sin(ang);
+    const t=document.createElement('div');
+    t.className='tick'; t.dataset.n=n;
+    t.style.left=x+'px'; t.style.top=y+'px';
+    clockEl.appendChild(t);
   }
-  return a;
-}
-function flash(el, good=true){
-  el.classList.remove('flash-good','flash-bad');
-  el.classList.add(good ? 'flash-good' : 'flash-bad');
-  setTimeout(()=>el.classList.remove('flash-good','flash-bad'), 320);
-}
-function flashCard(el, good=true){
-  el.classList.remove('good','bad');
-  el.classList.add(good ? 'good' : 'bad');
-  setTimeout(()=>el.classList.remove('good','bad'), 420);
 }
 
-const PEOPLE = {
-  rene:   {name:'René',   img:'https://i.postimg.cc/zbTCM0Mv/rene.png'},
-  katrine:{name:'Katrine',img:'https://i.postimg.cc/fSZchYnH/katrine.png'},
-  romain: {name:'Romain', img:'https://i.postimg.cc/D4FrK1k5/romain.png'},
-  josiane:{name:'Josiane',img:'https://i.postimg.cc/5Q1BM8d3/josiane.png'},
-  jean:   {name:'Jean',   img:'https://i.postimg.cc/T5GVXnMn/jean.png'},
-  jeanne: {name:'Jeanne', img:'https://i.postimg.cc/cgfRjXjg/jeanne.png'},
-  elisa:  {name:'Elisa',  img:'https://i.postimg.cc/Q9cQP0PF/elisa.png'},
-  robin:  {name:'Robin',  img:'https://i.postimg.cc/ftYcFBFk/robin.png'},
-};
+/* ---------- TOP BAR arrows (cycle sections) ---------- */
+const orderIds = ['aueren','spill1','spill2','spill3'];
+const tabBtns = [...document.querySelectorAll('.tab')];
 
-const POS = {
-  rene:    {x:46, y:16},
-  katrine: {x:58, y:16},
-  romain:  {x:18, y:50},
-  josiane: {x:36, y:50},
-  jean:    {x:58, y:50},
-  jeanne:  {x:80, y:50},
-  elisa:   {x:28, y:82},
-  robin:   {x:72, y:82},
-};
-
-const LINES = [
-  ['rene','katrine'],
-  ['katrine','josiane'], ['rene','josiane'],
-  ['katrine','jean'],    ['rene','jean'],
-  ['romain','josiane'],
-  ['jean','jeanne'],
-  ['romain','elisa'], ['josiane','elisa'],
-  ['jean','robin'],   ['jeanne','robin'],
-];
-
-function makeLinesSVG(){
-  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-  svg.setAttribute('class','famLines');
-  svg.setAttribute('viewBox','0 0 100 100');
-  svg.setAttribute('preserveAspectRatio','none');
-
-  LINES.forEach(([a,b])=>{
-    const A = POS[a], B = POS[b];
-    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1', A.x);
-    line.setAttribute('y1', A.y);
-    line.setAttribute('x2', B.x);
-    line.setAttribute('y2', B.y);
-    line.setAttribute('stroke', 'rgba(23,60,87,.45)');
-    line.setAttribute('stroke-width', '0.8');
-    line.setAttribute('stroke-linecap', 'round');
-    svg.appendChild(line);
-  });
-
-  return svg;
+function activeIndex(){
+  return orderIds.findIndex(id => document.getElementById(id).classList.contains('active'));
 }
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 
-function buildFamilyStage(stageEl, onClick){
-  stageEl.innerHTML = '';
-  stageEl.appendChild(makeLinesSVG());
-
-  Object.keys(POS).forEach(id=>{
-    const card = document.createElement('button');
-    card.type='button';
-    card.className='personCard';
-    card.style.left = POS[id].x + '%';
-    card.style.top  = POS[id].y + '%';
-    card.setAttribute('aria-label', PEOPLE[id].name);
-
-    const img = document.createElement('img');
-    img.src = PEOPLE[id].img;
-    img.alt = PEOPLE[id].name;
-
-    const name = document.createElement('div');
-    name.className='personName';
-    name.textContent = PEOPLE[id].name;
-
-    card.appendChild(img);
-    card.appendChild(name);
-
-    card.addEventListener('click', ()=>onClick(id, card));
-    stageEl.appendChild(card);
+  tabBtns.forEach(b=>{
+    const on = b.dataset.target === id;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
   });
 }
+document.getElementById('prevBar').addEventListener('click', ()=>{
+  const i = Math.max(0, activeIndex());
+  const ni = (i + orderIds.length - 1) % orderIds.length;
+  showSection(orderIds[ni]);
+});
+document.getElementById('nextBar').addEventListener('click', ()=>{
+  const i = Math.max(0, activeIndex());
+  const ni = (i + 1) % orderIds.length;
+  showSection(orderIds[ni]);
+});
 
-/* Top nav */
-const gameTitles = [
-  'Lauschter a klick',
-  'Wéi heescht?',
-  'Wie sinn ech?',
-  'Mäin oder meng?',
-  'Stell Froen'
-];
-const sections = ['g1','g2','g3','g4','g5'];
-let currentIndex = 0;
+/* tabs */
+tabBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    showSection(btn.dataset.target);
+  });
+});
 
-function showGame(i){
-  currentIndex = (i+sections.length) % sections.length;
-  sections.forEach((id, idx)=>$('#'+id).classList.toggle('hidden', idx!==currentIndex));
-  $('#topTitle').textContent = gameTitles[currentIndex];
+/* ---------- Auer üben (coupled clock) ---------- */
+function coupledClock(rootId, readoutId, showDigital=true){
+  const root=document.getElementById(rootId);
+  placeTicks(root);
+  const hour=document.createElement('div'); hour.className='hand hour';
+  const min =document.createElement('div'); min.className='hand min';
+  const pivot=document.createElement('div'); pivot.className='pivot';
+  root.append(hour,min,pivot);
+  window.addEventListener('resize', ()=>placeTicks(root));
 
-  if(currentIndex===0) g1.ensure();
-  if(currentIndex===1) g2.ensure();
-  if(currentIndex===2) g3.ensure();
-  if(currentIndex===3) g4.ensure();
-  if(currentIndex===4) g5.ensure();
+  let H=12, M=0;
+  const ro=document.getElementById(readoutId);
+
+  function normalize(){ while(M<0){M+=60;H--} while(M>=60){M-=60;H++} while(H<=0){H+=12} while(H>12){H-=12} }
+  function render(){ setHand(min,M*6); setHand(hour,(H%12)*30 + M*0.5); if(ro) ro.textContent = showDigital ? `${String(((H%12)||12)).padStart(2,'0')}:${String(M).padStart(2,'0')}` : ''; }
+  function setTime(h,m){ H=h; M=m; normalize(); render(); }
+
+  function drag(el, mode){
+    let on=false;
+    const start=e=>{ if(e.target!==el) return; on=true; e.preventDefault(); }
+    const move =e=>{
+      if(!on) return;
+      const d=degFromPointer(e, root);
+      if(mode==='min'){
+        const prev=M*6;
+        const delta=(((d - prev + 540) % 360) - 180);
+        const dm=Math.round(delta/6);
+        setTime(H, M+dm);
+      }else{
+        let total=d/30; if(total<0) total+=12;
+        let base=Math.floor(total)||12;
+        let mins=Math.round((total - Math.floor(total))*60);
+        if(mins===60){ mins=0; base=(base%12)+1; }
+        setTime(base, mins);
+      }
+    };
+    const end=()=>{ on=false; };
+    el.addEventListener('mousedown',start);
+    window.addEventListener('mousemove',move);
+    window.addEventListener('mouseup',end);
+    el.addEventListener('touchstart',start,{passive:false});
+    window.addEventListener('touchmove',move,{passive:false});
+    window.addEventListener('touchend',end);
+  }
+  drag(min,'min'); drag(hour,'hour');
+
+  setTime(10,10);
+  return { setTime };
 }
-$('#prevBtn').addEventListener('click', ()=>showGame(currentIndex-1));
-$('#nextBtn').addEventListener('click', ()=>showGame(currentIndex+1));
 
-/* Audio vocab */
-const AUDIO_BASE = 'https://github.com/albrechtclaire1007/p3famill/raw/refs/heads/main/';
-const WORD_AUDIO = {
-  bom: 'BOM.mp3',
-  bop: 'BOP.mp3',
-  bouf: 'BOUF.mp3',
-  brudder: 'BRUDDER.mp3',
-  cousin: 'COUSIN.mp3',
-  cousine: 'COUSINE.mp3',
-  duechter: 'DUECHTER.mp3',
-  fra: 'FRA.mp3',
-  mamm: 'MAMM.mp3',
-  mann: 'MANN.mp3',
-  monni: 'MONNI.mp3',
-  papp: 'PAPP.mp3',
-  schwester: 'SCHWESTER.mp3',
-  tatta: 'TATTA.mp3'
-};
-function playWordAudio(key){
-  const src = AUDIO_BASE + WORD_AUDIO[key];
-  const a = new Audio(src);
-  a.play().catch(()=>{});
-}
+/* mount simple clock */
+coupledClock('c1','c1readout', true);
+document.getElementById('toggleDigital').addEventListener('change', e=>{
+  document.getElementById('c1readout').style.display = e.target.checked ? 'block' : 'none';
+});
 
-/* GAME 1 */
-const g1 = (()=> {
-  let started=false;
-  let round=0;
-  const total=20;
-  let items=[];
-  let current=null;
-  let canAnswer=true;
+/* ---------- 1. Spill – Hallwer ---------- */
+(function(){
+  const root=document.getElementById('c2');
+  placeTicks(root);
 
-  const BANK = [
-    {speaker:'elisa', word:'mamm', target:'josiane', text:"Ech sinn d Elisa. Wien ass meng Mamm?"},
-    {speaker:'elisa', word:'papp', target:'romain',  text:"Ech sinn d Elisa. Wien ass mäi Papp?"},
-    {speaker:'elisa', word:'bom',  target:'katrine', text:"Ech sinn d Elisa. Wien ass meng Bom?"},
-    {speaker:'elisa', word:'bop',  target:'rene',    text:"Ech sinn d Elisa. Wien ass mäi Bop?"},
-    {speaker:'elisa', word:'monni',target:'jean',    text:"Ech sinn d Elisa. Wien ass mäi Monni?"},
-    {speaker:'elisa', word:'tatta',target:'jeanne',  text:"Ech sinn d Elisa. Wien ass meng Tatta?"},
-    {speaker:'elisa', word:'cousin', target:'robin', text:"Ech sinn d Elisa. Wien ass mäi Cousin?"},
+  const hSolid=document.createElement('div'); hSolid.className='hand hour';
+  const mSolid=document.createElement('div'); mSolid.className='hand min';
+  const hGhost=document.createElement('div'); hGhost.className='hand hour ghost';
+  const mGhost=document.createElement('div'); mGhost.className='hand min ghost';
+  const pivot=document.createElement('div'); pivot.className='pivot';
+  root.append(hSolid,mSolid,hGhost,mGhost,pivot);
+  window.addEventListener('resize', ()=>placeTicks(root));
 
-    {speaker:'robin', word:'mamm', target:'jeanne',  text:"Ech sinn de Robin. Wien ass meng Mamm?"},
-    {speaker:'robin', word:'papp', target:'jean',    text:"Ech sinn de Robin. Wien ass mäi Papp?"},
-    {speaker:'robin', word:'bom',  target:'katrine', text:"Ech sinn de Robin. Wien ass meng Bom?"},
-    {speaker:'robin', word:'bop',  target:'rene',    text:"Ech sinn de Robin. Wien ass mäi Bop?"},
-    {speaker:'robin', word:'monni',target:'romain',  text:"Ech sinn de Robin. Wien ass mäi Monni?"},
-    {speaker:'robin', word:'tatta',target:'josiane', text:"Ech sinn de Robin. Wien ass meng Tatta?"},
-    {speaker:'robin', word:'cousine', target:'elisa',text:"Ech sinn de Robin. Wien ass meng Cousine?"},
+  const fb=document.getElementById('hFeedback');
+  const nextBtn=document.getElementById('nextHallwer');
 
-    {speaker:'jean', word:'mamm', target:'katrine',  text:"Ech sinn de Jean. Wien ass meng Mamm?"},
-    {speaker:'jean', word:'papp', target:'rene',     text:"Ech sinn de Jean. Wien ass mäi Papp?"},
-    {speaker:'jean', word:'fra',  target:'jeanne',   text:"Ech sinn de Jean. Wien ass meng Fra?"},
-    {speaker:'jean', word:'bouf', target:'robin',    text:"Ech sinn de Jean. Wien ass mäi Bouf?"},
+  let X=3;
 
-    {speaker:'josiane', word:'mamm', target:'katrine', text:"Ech sinn d Josiane. Wien ass meng Mamm?"},
-    {speaker:'josiane', word:'papp', target:'rene',    text:"Ech sinn d Josiane. Wien ass mäi Papp?"},
-    {speaker:'josiane', word:'mann', target:'romain',  text:"Ech sinn d Josiane. Wien ass mäi Mann?"},
-    {speaker:'josiane', word:'duechter', target:'elisa',text:"Ech sinn d Josiane. Wien ass meng Duechter?"},
+  function setStart(x){
+    setHand(mSolid, 180);
+    setHand(hSolid, (x%12)*30 + 15);
+    setHand(mGhost, 180);
+    setHand(hGhost, (x%12)*30 + 15);
+    fb.textContent = "";
+  }
+  function newRound(){ X = Math.floor(Math.random()*12)+1; setStart(X); }
+  nextBtn.addEventListener('click', newRound);
 
-    {speaker:'jeanne', word:'mann', target:'jean',    text:"Ech sinn d Jeanne. Wien ass mäi Mann?"},
-    {speaker:'jeanne', word:'bouf', target:'robin',   text:"Ech sinn d Jeanne. Wien ass mäi Bouf?"},
-  ];
-
-  function buildItems(){
-    const many = [];
-    while(many.length < total) many.push(...BANK);
-    items = shuffle(many).slice(0, total);
+  function coupleGhostByMinute(deg){
+    setHand(mGhost, deg);
+    const mm = Math.round(((deg%360)+360)%360 / 6);
+    const forward = ((mm + 60) - 30) % 60;
+    const hourFrac = X + 0.5 + forward/60;
+    const hDeg = (hourFrac % 12) * 30;
+    setHand(hGhost, hDeg);
+    return { mm, hDeg };
   }
 
-  function render(){
-    current = items[round];
-    $('#g1Prog').textContent = `${round+1} vun ${total}`;
-    $('#g1Status').textContent = 'Lauschter';
-    $('#g1Text').textContent = current.text;
-    $('#g1SpeakerImg').src = PEOPLE[current.speaker].img;
-    canAnswer = true;
-  }
-
-  function handleClick(personId, cardEl){
-    if(!canAnswer) return;
-    const good = (personId === current.target);
-    flashCard(cardEl, good);
-    $('#g1Status').textContent = good ? 'Richteg' : 'Probéier nach eng Kéier';
-    if(good){
-      canAnswer=false;
-      setTimeout(()=>{
-        round++;
-        if(round>=total){
-          $('#g1Status').textContent='Fäerdeg';
-          $('#g1Text').textContent='Alles richteg. Tippen op Neistarten.';
-          return;
-        }
-        render();
-      }, 520);
-    }
-  }
-
-  function restart(){
-    round=0;
-    buildItems();
-    render();
-  }
-
-  function ensure(){
-    if(started) return;
-    started=true;
-    buildFamilyStage($('#fam1'), handleClick);
-    $('#g1Play').addEventListener('click', ()=>{ if(current) playWordAudio(current.word); });
-    $('#g1Restart').addEventListener('click', restart);
-    restart();
-  }
-
-  return {ensure};
-})();
-
-/* GAME 2 */
-const g2 = (()=> {
-  let started=false;
-  let round=0;
-  const total=20;
-  let items=[];
-  let current=null;
-  let canAnswer=true;
-
-  const BANK = [
-    {text:"Ech sinn d Elisa, meng Mamm heescht", target:'josiane'},
-    {text:"Ech sinn d Elisa, mäi Papp heescht", target:'romain'},
-    {text:"Ech sinn d Elisa, meng Bom heescht", target:'katrine'},
-    {text:"Ech sinn d Elisa, mäi Bop heescht", target:'rene'},
-    {text:"Ech sinn d Elisa, mäi Monni heescht", target:'jean'},
-    {text:"Ech sinn d Elisa, meng Tatta heescht", target:'jeanne'},
-    {text:"Ech sinn d Elisa, mäi Cousin heescht", target:'robin'},
-
-    {text:"Ech sinn de Robin, meng Mamm heescht", target:'jeanne'},
-    {text:"Ech sinn de Robin, mäi Papp heescht", target:'jean'},
-    {text:"Ech sinn de Robin, meng Bom heescht", target:'katrine'},
-    {text:"Ech sinn de Robin, mäi Bop heescht", target:'rene'},
-    {text:"Ech sinn de Robin, mäi Monni heescht", target:'romain'},
-    {text:"Ech sinn de Robin, meng Tatta heescht", target:'josiane'},
-    {text:"Ech sinn de Robin, meng Cousine heescht", target:'elisa'},
-
-    {text:"Ech sinn de Jean, meng Mamm heescht", target:'katrine'},
-    {text:"Ech sinn de Jean, mäi Papp heescht", target:'rene'},
-    {text:"Ech sinn de Jean, meng Fra heescht", target:'jeanne'},
-    {text:"Ech sinn de Jean, mäi Bouf heescht", target:'robin'},
-
-    {text:"Ech sinn d Josiane, meng Mamm heescht", target:'katrine'},
-    {text:"Ech sinn d Josiane, mäi Papp heescht", target:'rene'},
-    {text:"Ech sinn d Josiane, mäi Mann heescht", target:'romain'},
-    {text:"Ech sinn d Josiane, meng Duechter heescht", target:'elisa'},
-
-    {text:"Ech sinn d Jeanne, mäi Mann heescht", target:'jean'},
-    {text:"Ech sinn d Jeanne, mäi Bouf heescht", target:'robin'},
-  ];
-
-  function buildItems(){
-    const many = [];
-    while(many.length < total) many.push(...BANK);
-    items = shuffle(many).slice(0, total);
-  }
-
-  function render(){
-    current = items[round];
-    $('#g2Prog').textContent = `${round+1} vun ${total}`;
-    $('#g2Status').textContent = 'Klick';
-    $('#g2Text').textContent = current.text + ' ...?';
-    canAnswer = true;
-  }
-
-  function handleClick(personId, cardEl){
-    if(!canAnswer) return;
-    const good = (personId === current.target);
-    flashCard(cardEl, good);
-    $('#g2Status').textContent = good ? 'Richteg' : 'Probéier nach eng Kéier';
-    if(good){
-      canAnswer=false;
-      setTimeout(()=>{
-        round++;
-        if(round>=total){
-          $('#g2Status').textContent='Fäerdeg';
-          $('#g2Text').textContent='Alles richteg. Tippen op Neistarten.';
-          return;
-        }
-        render();
-      }, 520);
-    }
-  }
-
-  function restart(){
-    round=0;
-    buildItems();
-    render();
-  }
-
-  function ensure(){
-    if(started) return;
-    started=true;
-    buildFamilyStage($('#fam2'), handleClick);
-    $('#g2Restart').addEventListener('click', restart);
-    restart();
-  }
-
-  return {ensure};
-})();
-
-/* GAME 3 */
-const g3 = (()=> {
-  let started=false;
-  let round=0;
-  const total=20;
-  let items=[];
-  let current=null;
-  let canAnswer=true;
-
-  const BANK = [
-    {clue:"De Jean ass mäi Brudder. Ech sinn e Jong.", answer:'robin'},
-    {clue:"D Josiane ass meng Mamm. Ech sinn e Meedchen.", answer:'elisa'},
-    {clue:"De René ass mäi Bop. Ech sinn e Jong.", answer:'robin'},
-    {clue:"D Katrine ass meng Bom. Ech sinn e Meedchen.", answer:'elisa'},
-    {clue:"D Jeanne ass meng Fra. Ech sinn e Mann.", answer:'jean'},
-    {clue:"De Romain ass mäi Mann. Ech sinn eng Fra.", answer:'josiane'},
-    {clue:"Ech sinn dem Jean säi Bouf.", answer:'robin'},
-    {clue:"Ech sinn dem Romain seng Duechter.", answer:'elisa'},
-    {clue:"Ech sinn dem Robin seng Tatta.", answer:'josiane'},
-    {clue:"Ech sinn dem Elisa säi Monni.", answer:'jean'},
-    {clue:"Ech sinn dem René seng Fra.", answer:'katrine'},
-    {clue:"De Jean ass mäi Mann. Ech sinn eng Fra.", answer:'jeanne'},
-    {clue:"D Josiane ass meng Schwëster. Ech sinn e Mann.", answer:'jean'},
-    {clue:"De Robin ass mäi Cousin. Ech sinn e Meedchen.", answer:'elisa'},
-    {clue:"D Elisa ass meng Cousine. Ech sinn e Jong.", answer:'robin'},
-  ];
-
-  function buildItems(){
-    const many = [];
-    while(many.length < total) many.push(...BANK);
-    items = shuffle(many).slice(0, total);
-  }
-
-  function buildOptions(correctId){
-    const all = Object.keys(PEOPLE);
-    const distract = shuffle(all.filter(x=>x!==correctId)).slice(0,3);
-    return shuffle([correctId, ...distract]);
-  }
-
-  function render(){
-    current = items[round];
-    $('#g3Prog').textContent = `${round+1} vun ${total}`;
-    $('#g3Status').textContent = 'Wielt';
-    $('#g3Clue').textContent = current.clue;
-    canAnswer=true;
-
-    const opts = buildOptions(current.answer);
-    const holder = $('#g3Options');
-    holder.innerHTML = '';
-    opts.forEach(pid=>{
-      const b = document.createElement('button');
-      b.className='btn btnPrimary';
-      b.textContent = PEOPLE[pid].name;
-      b.addEventListener('click', ()=>{
-        if(!canAnswer) return;
-        const good = (pid===current.answer);
-        flash(b, good);
-        $('#g3Status').textContent = good ? 'Richteg' : 'Probéier nach eng Kéier';
-        if(good){
-          canAnswer=false;
-          setTimeout(()=>{
-            round++;
-            if(round>=total){
-              $('#g3Status').textContent='Fäerdeg';
-              $('#g3Clue').innerHTML='<b>Alles richteg!</b>';
-              holder.innerHTML='';
-              return;
-            }
-            render();
-          }, 420);
-        }
-      });
-      holder.appendChild(b);
-    });
-  }
-
-  function restart(){
-    round=0;
-    buildItems();
-    render();
-  }
-
-  function ensure(){
-    if(started) return;
-    started=true;
-    $('#g3Restart').addEventListener('click', restart);
-    restart();
-  }
-
-  return {ensure};
-})();
-
-/* GAME 4 */
-const g4 = (()=> {
-  let started=false;
-  let round=0;
-  const total=16;
-  let items=[];
-  let current=null;
-  let canAnswer=true;
-
-  const CHOICES = ['mäin','meng','däin','deng'];
-
-  const BANK = [
-    {line:"Robin: Wéi heescht ___ Mamm, Elisa?", correct:"deng"},
-    {line:"Elisa: ___ Mamm heescht Josiane.", correct:"meng"},
-    {line:"Elisa: Wéi heescht ___ Papp, Robin?", correct:"däin"},
-    {line:"Robin: ___ Papp heescht Jean.", correct:"mäin"},
-    {line:"Robin: Wéi heescht ___ Bom, Elisa?", correct:"deng"},
-    {line:"Elisa: ___ Bom heescht Katrine.", correct:"meng"},
-    {line:"Elisa: Wéi heescht ___ Bop, Robin?", correct:"däin"},
-    {line:"Robin: ___ Bop heescht René.", correct:"mäin"},
-    {line:"Robin: Ass dat ___ Cousine?", correct:"deng"},
-    {line:"Elisa: Jo, dat ass ___ Cousin.", correct:"mäin"},
-    {line:"Elisa: Ass dat ___ Monni?", correct:"däin"},
-    {line:"Robin: Jo, dat ass ___ Tatta.", correct:"meng"},
-    {line:"Elisa: Dat ass ___ Papp.", correct:"mäin"},
-    {line:"Robin: Dat ass ___ Mamm.", correct:"meng"},
-    {line:"Elisa: Dat ass ___ Bouf.", correct:"däin"},
-    {line:"Robin: Dat ass ___ Duechter.", correct:"deng"},
-  ];
-
-  function buildItems(){
-    items = shuffle(BANK).slice(0, total);
-  }
-
-  function render(){
-    current = items[round];
-    $('#g4Prog').textContent = `${round+1} vun ${total}`;
-    $('#g4Status').textContent = 'Wielt';
-    $('#g4Line').innerHTML = current.line.replace('___', '<span class="slot" id="g4Slot">___</span>');
-    canAnswer=true;
-
-    const holder = $('#g4Options');
-    holder.innerHTML='';
-    shuffle(CHOICES).forEach(c=>{
-      const b = document.createElement('button');
-      b.className='btn btnPrimary';
-      b.textContent=c;
-      b.addEventListener('click', ()=>{
-        if(!canAnswer) return;
-        const good = (c===current.correct);
-        flash(b, good);
-        $('#g4Status').textContent = good ? 'Richteg' : 'Probéier nach eng Kéier';
-        if(good){
-          canAnswer=false;
-          $('#g4Slot').textContent=c;
-          setTimeout(()=>{
-            round++;
-            if(round>=total){
-              $('#g4Status').textContent='Fäerdeg';
-              $('#g4Line').innerHTML='<b>Alles richteg!</b>';
-              holder.innerHTML='';
-              return;
-            }
-            render();
-          }, 520);
-        }
-      });
-      holder.appendChild(b);
-    });
-  }
-
-  function restart(){
-    round=0;
-    buildItems();
-    render();
-  }
-
-  function ensure(){
-    if(started) return;
-    started=true;
-    $('#g4Restart').addEventListener('click', restart);
-    restart();
-  }
-
-  return {ensure};
-})();
-
-/* GAME 5 */
-const g5 = (()=> {
-  let started=false;
-  let round=0;
-  const total=16;
-
-  let state = { askTo:'robin', pron:'deng', rel:'Mamm' };
-
-  const PRON_OPTS = ['däin','deng'];
-  const REL_OPTS = ['Mamm','Papp','Bom','Bop','Monni','Tatta','Cousin','Cousine'];
-
-  const ANSWERS = {
-    robin:  { Mamm:'Jeanne', Papp:'Jean', Bom:'Katrine', Bop:'René', Monni:'Romain', Tatta:'Josiane', Cousin:'', Cousine:'Elisa' },
-    elisa:  { Mamm:'Josiane', Papp:'Romain', Bom:'Katrine', Bop:'René', Monni:'Jean', Tatta:'Jeanne', Cousin:'Robin', Cousine:'' }
-  };
-
-  function pickRound(){
-    state.askTo = (Math.random()<0.5) ? 'robin' : 'elisa';
-    const possible = REL_OPTS.filter(r=>!!ANSWERS[state.askTo][r]);
-    state.rel = possible[Math.floor(Math.random()*possible.length)];
-
-    const fem = ['Mamm','Bom','Tatta','Cousine'];
-    state.pron = fem.includes(state.rel) ? 'deng' : 'däin';
-
-    $('#g5Pron').textContent = state.pron;
-    $('#g5Rel').textContent = state.rel;
-    $('#g5Answer').style.display='none';
-    $('#g5Status').textContent = 'Baue';
-    $('#g5Prog').textContent = `${round+1} vun ${total}`;
-  }
-
-  function renderOptions(){
-    const pHolder = $('#g5PronOpts');
-    pHolder.innerHTML='';
-    shuffle(PRON_OPTS).forEach(p=>{
-      const b = document.createElement('button');
-      b.className='btn btnPrimary';
-      b.textContent=p;
-      b.addEventListener('click', ()=>{
-        state.pron = p;
-        $('#g5Pron').textContent = p;
-      });
-      pHolder.appendChild(b);
-    });
-
-    const rHolder = $('#g5RelOpts');
-    rHolder.innerHTML='';
-    shuffle(REL_OPTS).forEach(r=>{
-      if(!ANSWERS[state.askTo][r]) return;
-      const b = document.createElement('button');
-      b.className='btn btnPrimary';
-      b.textContent=r;
-      b.addEventListener('click', ()=>{
-        state.rel = r;
-        $('#g5Rel').textContent = r;
-        const fem = ['Mamm','Bom','Tatta','Cousine'];
-        const expected = fem.includes(r) ? 'deng' : 'däin';
-        state.pron = expected;
-        $('#g5Pron').textContent = expected;
-      });
-      rHolder.appendChild(b);
-    });
-  }
+  (function(){
+    let on=false;
+    const start=e=>{ if(e.target!==mGhost) return; on=true; e.preventDefault(); }
+    const move =e=>{ if(!on) return; const d=degFromPointer(e, root); coupleGhostByMinute(d); };
+    const end  =()=>{ on=false; };
+    mGhost.addEventListener('mousedown',start);
+    window.addEventListener('mousemove',move);
+    window.addEventListener('mouseup',end);
+    mGhost.addEventListener('touchstart',start,{passive:false});
+    window.addEventListener('touchmove',move,{passive:false});
+    window.addEventListener('touchend',end);
+  })();
 
   function check(){
-    const correctName = ANSWERS[state.askTo][state.rel];
-    const fem = ['Mamm','Bom','Tatta','Cousine'];
-    const expectedPron = fem.includes(state.rel) ? 'deng' : 'däin';
-    const okPron = (state.pron === expectedPron);
+    const mDeg = parseFloat(mGhost.dataset.deg||'0');
+    const mm   = Math.round(((mDeg%360)+360)%360 / 6) % 60;
+    const atTop = (mm<=3 || mm>=57);
+    const next = (X % 12) + 1;
+    const hDeg = parseFloat(hGhost.dataset.deg||'0');
+    const targetH = (next%12)*30;
+    const diff = Math.abs((((hDeg - targetH) + 540) % 360) - 180);
+    const hourOK = diff <= 6;
 
-    const answerBox = $('#g5Answer');
-    answerBox.style.display='block';
-    const model = fem.includes(state.rel) ? 'Meng' : 'Mäi';
+    if(atTop && hourOK){
+      fb.textContent = `Richteg! Et ass hallwer ${next}.`;
+      const tick = [...root.querySelectorAll('.tick')].find(t => Number(t.dataset.n) === (next===13?1:next));
+      if(tick){ tick.classList.remove('flash-green'); void tick.offsetWidth; tick.classList.add('flash-green'); }
+    }
+    requestAnimationFrame(check);
+  }
 
-    if(okPron){
-      $('#g5Status').textContent = 'Richteg';
-      answerBox.innerHTML = `${model} ${state.rel} heescht ${correctName}.`;
-      flash($('#g5Check'), true);
-      setTimeout(()=>{
-        round++;
-        if(round>=total){
-          $('#g5Status').textContent='Fäerdeg';
-          $('#g5Answer').innerHTML='<b>Alles fäerdeg!</b>';
-          return;
-        }
-        pickRound();
-        renderOptions();
-      }, 900);
+  newRound();
+  requestAnimationFrame(check);
+})();
+
+/* ---------- 2. Spill – D’Zäit astellen ---------- */
+(function(){
+  const RAW = "https://github.com/albrechtclaire1007/p3auer/raw/refs/heads/main/";
+  const items = [
+    { h:10, m:0,  audio: RAW + "10%20AUER.mp3" },
+    { h:9,  m:0,  audio: RAW + "9%20AUER.mp3"  },
+    { h:8,  m:0,  audio: RAW + "8%20AUER.mp3"  },
+    { h:5,  m:0,  audio: RAW + "5%20AUER.mp3"  },
+    { h:6,  m:0,  audio: RAW + "6%20AUER.mp3"  },
+    { h:3,  m:0,  audio: RAW + "3%20AUER.mp3"  },
+    { h:12, m:0,  audio: RAW + "12%20AUER.mp3" },
+    { h:1,  m:0,  audio: RAW + "1%20AUER.mp3"  },
+
+    { h:2,  m:30, audio: RAW + "230.mp3"  },
+    { h:4,  m:30, audio: RAW + "430.mp3"  },
+    { h:6,  m:30, audio: RAW + "630.mp3"  },
+    { h:7,  m:30, audio: RAW + "730.mp3"  },
+    { h:8,  m:30, audio: RAW + "830.mp3"  },
+    { h:9,  m:30, audio: RAW + "930.mp3"  },
+    { h:11, m:30, audio: RAW + "1130.mp3" },
+  ];
+  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  shuffle(items);
+  let idx=0;
+
+  const root=document.getElementById('c3');
+  placeTicks(root);
+  const hour=document.createElement('div'); hour.className='hand hour';
+  const min =document.createElement('div'); min.className='hand min';
+  const pivot=document.createElement('div'); pivot.className='pivot';
+  root.append(hour,min,pivot);
+  window.addEventListener('resize', ()=>placeTicks(root));
+
+  const fb=document.getElementById('pFeedback');
+  const enableBtn=document.getElementById('pEnableAudio');
+  const replayBtn=document.getElementById('pReplay');
+  const audio=new Audio();
+
+  function tryPlay(resetTime=false){
+    if(resetTime) audio.currentTime = 0;
+    enableBtn.style.display='none';
+    const p = audio.play();
+    if(p && typeof p.then==='function'){
+      p.then(()=>{ replayBtn.disabled = false; }).catch(()=>{ enableBtn.style.display='inline-block'; });
     }else{
-      $('#g5Status').textContent = 'Probéier nach eng Kéier';
-      answerBox.innerHTML = `D Fro ass bal richteg. Probéier ${expectedPron}.`;
-      flash($('#g5Check'), false);
+      replayBtn.disabled = false;
     }
   }
 
-  function restart(){
-    round=0;
-    pickRound();
-    renderOptions();
+  function load(i){
+    const it=items[i];
+    setHand(min,0); setHand(hour,0);
+    min.dataset.target = (it.m*6);
+    hour.dataset.target = ((it.h%12)*30 + it.m*0.5);
+    audio.src = it.audio;
+    replayBtn.disabled = true;
+    fb.textContent = '';
+    audio.oncanplay = ()=>{ replayBtn.disabled = false; audio.oncanplay = null; };
+    tryPlay();
   }
 
-  function ensure(){
-    if(started) return;
-    started=true;
-    $('#g5Restart').addEventListener('click', restart);
-    $('#g5Check').addEventListener('click', check);
-    restart();
-  }
+  enableBtn.addEventListener('click', ()=>tryPlay(false));
+  replayBtn.addEventListener('click', ()=>tryPlay(true));
 
-  return {ensure};
+  function smallest(a,b){ let d=Math.abs(a-b)%360; return d>180?360-d:d }
+  const MIN_TOL=9, HOUR_TOL=7;
+
+  function drag(el){
+    let on=false;
+    const start=e=>{ if(e.target!==el) return; on=true; e.preventDefault(); }
+    const move=e=>{ if(!on) return; const d=degFromPointer(e, root); setHand(el,d); }
+    const end =()=>{ on=false; };
+    el.addEventListener('mousedown',start);
+    window.addEventListener('mousemove',move);
+    window.addEventListener('mouseup',end);
+    el.addEventListener('touchstart',start,{passive:false});
+    window.addEventListener('touchmove',move,{passive:false});
+    window.addEventListener('touchend',end);
+  }
+  drag(min); drag(hour);
+
+  document.getElementById('pValidate').addEventListener('click', ()=>{
+    const mDeg=parseFloat(min.dataset.deg||0), hDeg=parseFloat(hour.dataset.deg||0);
+    const mt=parseFloat(min.dataset.target),   ht=parseFloat(hour.dataset.target);
+    const okM = smallest(mDeg, mt) <= MIN_TOL;
+    const okH = smallest(hDeg, ht) <= HOUR_TOL;
+    fb.textContent = (okM && okH) ? 'Richteg!' : 'Nach eng Kéier!';
+    if(okM && okH){
+      setTimeout(()=>{ idx=(idx+1)%items.length; load(idx); }, 800);
+    }
+  });
+
+  load(idx);
 })();
 
-/* start */
-showGame(0);
+/* ---------- 3. Spill – QUIZ ---------- */
+(function(){
+  const quizData = [
+    { h:11, m:30, opts:["Et ass hallwer zwierlef.","Et ass zwierlef hallwer.","Et ass hallwer eng."], correct:0 },
+    { h:12, m:0,  opts:["Et ass zwierlef.","Et ass zwierlef Auer","Et ass Auer zwierlef."], correct:1 },
+    { h:10, m:0,  opts:["Et ass zéng Auer.","Et ass Auer zéng.","Et ass zéng."], correct:0 },
+    { h:4,  m:0,  opts:["Et ass véier.","Et ass véier Auer.","Et ass Auer véier."], correct:1 },
+    { h:9,  m:0,  opts:["Et ass néng Auer.","Et ass Auer néng.","Et ass néng."], correct:0 },
+    { h:9,  m:30, opts:["Et ass néng drësseg.","Et ass hallwer zéng.","Et ass hallwer néng."], correct:1 },
+    { h:10, m:30, opts:["Et ass zéng drësseg.","Et ass sechs Auer.","Et ass hallwer eelef."], correct:2 },
+    { h:3,  m:30, opts:["Et ass hallwer fënnef.","Et ass hallwer véier.","Et ass véier hallwer."], correct:1 },
+    { h:5,  m:30, opts:["Et ass hallwer sechs.","Et ass fënnef hallwer.","Et ass hallwer op fënnef."], correct:0 },
+    { h:1,  m:0,  opts:["Et ass eent Auer.","Et ass een Auer.","Et ass eng Auer."], correct:2 },
+    { h:6,  m:0,  opts:["Et ass sechs Auer.","Et ass sechs.","Et ass hallwer zwierlef."], correct:0 },
+    { h:2,  m:0,  opts:["Et ass Auer zwee.","Et ass zwee Auer.","Et ass zwou Auer."], correct:2 },
+    { h:3,  m:30, opts:["Et ass hallwer véier.","Et ass hallwer dräi.","Et ass dräi hallwer."], correct:0 },
+    { h:1,  m:30, opts:["Et ass hallwer zwee.","Et ass hallwer eng.","Et ass hallwer zwou."], correct:0 },
+    { h:6,  m:30, opts:["Et ass hallwer siwen.","Et ass hallwer sechs.","Et ass hallwer aacht."], correct:0 },
+    { h:8,  m:0,  opts:["Et ass aacht.","Et ass aacht Auer.","Et ass aacht null."], correct:1 },
+  ];
+
+  const root=document.getElementById('c4');
+  placeTicks(root);
+  const hour=document.createElement('div'); hour.className='hand hour';
+  const min =document.createElement('div'); min.className='hand min';
+  const pivot=document.createElement('div'); pivot.className='pivot';
+  root.append(hour,min,pivot);
+  window.addEventListener('resize', ()=>placeTicks(root));
+
+  const optsEl = document.getElementById('quizOptions');
+  const retryBtn = document.getElementById('quizRetry');
+  const nextBtn  = document.getElementById('quizNext');
+  const feedback = document.getElementById('quizFeedback');
+
+  let qIndex = 0;
+  function setClock(h,m){
+    setHand(min, m*6);
+    setHand(hour, (h%12)*30 + m*0.5);
+  }
+  function renderQuestion(i){
+    const q = quizData[i];
+    setClock(q.h, q.m);
+    optsEl.innerHTML = '';
+    feedback.textContent = '';
+    retryBtn.disabled = true;
+    nextBtn.disabled = true;
+    q.opts.forEach((text, idx)=>{
+      const b=document.createElement('button');
+      b.className='btn opt-btn';
+      b.textContent=text;
+      b.addEventListener('click', ()=>{
+        [...optsEl.children].forEach(btn=>btn.disabled=true);
+        if(idx===q.correct){
+          feedback.textContent='Richteg!';
+          nextBtn.disabled = false;
+        }else{
+          feedback.textContent='Probéier nach eemol';
+          retryBtn.disabled = false;
+          [...optsEl.children].forEach(btn=>btn.disabled=false);
+        }
+      });
+      optsEl.appendChild(b);
+    });
+  }
+  retryBtn.addEventListener('click', ()=>{
+    feedback.textContent = '';
+    retryBtn.disabled = true;
+  });
+  nextBtn.addEventListener('click', ()=>{
+    qIndex = (qIndex + 1) % quizData.length;
+    renderQuestion(qIndex);
+  });
+
+  renderQuestion(qIndex);
+})();
 </script>
 </body>
 </html>
+
