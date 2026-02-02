@@ -12,7 +12,6 @@
   font-weight:bold; font-style:normal; font-display:swap;
 }
 
-/* ===== P3 LAYOUT MASTER (light blue) ===== */
 :root{
   --bg1:#E7F5FF;
   --bg2:#CFEAFF;
@@ -28,7 +27,6 @@
   --pad:clamp(10px,2.2vw,16px);
   --r:18px;
 
-  /* icons */
   --iconArrow:"https://i.postimg.cc/QBYTSN08/p3arrow.png";
   --iconReplay:"https://i.postimg.cc/ft30P4rQ/p3replay.png";
 }
@@ -216,7 +214,7 @@ html,body{
 .slot{
   display:inline-grid;
   place-items:center;
-  width:140px;               /* identical size everywhere */
+  width:140px;
   height:42px;
   padding:0 10px;
   border-radius:14px;
@@ -278,7 +276,7 @@ html,body{
   background:#fff;
 }
 .personName{
-  font-family:'Schoulschrëft', Arial, sans-serif; /* FIX: force font */
+  font-family:'Schoulschrëft', Arial, sans-serif;
   font-size:1.05rem;
   line-height:1;
   text-align:center;
@@ -286,53 +284,36 @@ html,body{
 .personCard.good{ background:rgba(183,240,200,.45); border-color:rgba(183,240,200,.0); }
 .personCard.bad{  background:rgba(255,204,204,.55); border-color:rgba(255,204,204,.0); }
 
-/* ===== GAME 2: write the word ===== */
-.wordBuild{
+/* ===== GAME 2: Lauschter a schreiw ===== */
+.writeWrap{
+  width:min(820px,92vw);
   display:flex;
   flex-direction:column;
-  gap:12px;
   align-items:center;
+  gap:12px;
 }
-.letterSlots{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-top:6px;
-}
-.letterSlot{
-  width:46px;
-  height:52px;
-  border-radius:14px;
-  border:2px dashed rgba(23,60,87,.40);
-  background:rgba(231,245,255,.65);
-  display:grid;
-  place-items:center;
-  font-size:1.6rem;
-  cursor:pointer;
-}
-.letterSlot.filled{
-  border-style:solid;
-  background:#fff;
-}
-.letterBank{
+.writeRow{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
+  align-items:center;
   justify-content:center;
-  margin-top:8px;
 }
-.letterBtn{
-  width:54px; height:54px;
-  border-radius:16px;
+.writeInput{
+  width:min(520px,92vw);
+  height:58px;
+  border-radius:18px;
   border:var(--border) solid rgba(23,60,87,.65);
-  background:linear-gradient(180deg,#ffffff 0%, #f3fbff 100%);
-  cursor:pointer;
-  font-size:1.6rem;
-  display:grid; place-items:center;
+  background:#fff;
+  font-size:1.35rem;
+  padding:0 14px;
+  font-family:'Schoulschrëft', Arial, sans-serif;
   box-shadow:0 6px 16px rgba(0,0,0,.08);
+  user-select:text;
 }
-.letterBtn:active{transform:scale(.98);}
+.writeInput:focus{
+  border-color:rgba(77,144,205,.95);
+}
 </style>
 </head>
 
@@ -383,27 +364,33 @@ html,body{
     </div>
   </section>
 
-  <!-- GAME 2 (NEW) -->
+  <!-- GAME 2 (UPDATED) -->
   <section class="card hidden" id="g2">
     <div class="inst">
-      <b>Spill 2: Schreif d’Wuert</b><br/>
-      Klick d’Buschtawen (du kanns se och erëm ewechmaachen).
+      <b>Spill 2: Lauschter a schreiw</b><br/>
+      Dréck op 🔊, lauschter, a schreiw d’Wuert. Dann: <b>Kontrolléieren</b>.
     </div>
 
     <div class="row">
       <div class="col center">
-        <div class="wordBuild">
-          <div class="qTitle" id="g2Prompt"></div>
+        <div class="writeWrap">
+          <div class="speakerLine">
+            <button class="audioBtn" id="g2Play" title="Audio">🔊</button>
+          </div>
 
-          <div class="letterSlots" id="g2Slots"></div>
-          <div class="letterBank" id="g2Bank"></div>
+          <div class="qTitle" id="g2Prompt">Wéi heescht dat?</div>
+
+          <div class="writeRow">
+            <input class="writeInput" id="g2Input" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Schreif hei...">
+            <button class="btn btnPrimary" id="g2Check">Kontrolléieren</button>
+          </div>
 
           <div class="scoreLine" style="width:min(820px,92vw);">
             <span class="badge" id="g2Prog">1 vun 20</span>
             <button class="imgBtn" id="g2Restart" aria-label="Replay">
               <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
             </button>
-            <span class="badge muted" id="g2Status">Klick</span>
+            <span class="badge muted" id="g2Status">Lauschter</span>
           </div>
         </div>
       </div>
@@ -425,7 +412,6 @@ html,body{
           <button class="imgBtn" id="g3Restart" aria-label="Replay">
             <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
           </button>
-          <!-- removed the old “Wielt” element entirely -->
         </div>
       </div>
 
@@ -548,14 +534,13 @@ const LINES = [
   ['jean','robin'],   ['jeanne','robin'],
 ];
 
-/* Proper D' formatting request (use D' for girl names) */
 const GIRLS = new Set(['katrine','josiane','jeanne','elisa']);
 function withArticle(id){
   if(GIRLS.has(id)) return `D'${PEOPLE[id].name}`;
   return `De ${PEOPLE[id].name}`;
 }
 
-/* ===== Family stage builder with CORRECT centered lines ===== */
+/* ===== Family stage builder with centered lines ===== */
 function buildFamilyStage(stageEl, onClick){
   stageEl.innerHTML = '';
 
@@ -566,7 +551,6 @@ function buildFamilyStage(stageEl, onClick){
   svg.style.height = '100%';
   stageEl.appendChild(svg);
 
-  // create cards first
   const cards = {};
   Object.keys(POS).forEach(id=>{
     const card = document.createElement('button');
@@ -594,7 +578,6 @@ function buildFamilyStage(stageEl, onClick){
     cards[id] = card;
   });
 
-  // build line elements (in px coords, updated on resize)
   const lineEls = LINES.map(([a,b])=>{
     const line = document.createElementNS('http://www.w3.org/2000/svg','line');
     line.setAttribute('stroke', 'rgba(23,60,87,.45)');
@@ -604,8 +587,7 @@ function buildFamilyStage(stageEl, onClick){
     return {a,b,line};
   });
 
-  function centerOfCard(id){
-    // Center of the IMAGE area (requested: middle/center of the image)
+  function centerOfImage(id){
     const card = cards[id];
     const img = card.querySelector('img');
     const stageRect = stageEl.getBoundingClientRect();
@@ -621,8 +603,8 @@ function buildFamilyStage(stageEl, onClick){
     svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
 
     lineEls.forEach(({a,b,line})=>{
-      const A = centerOfCard(a);
-      const B = centerOfCard(b);
+      const A = centerOfImage(a);
+      const B = centerOfImage(b);
       line.setAttribute('x1', A.cx);
       line.setAttribute('y1', A.cy);
       line.setAttribute('x2', B.cx);
@@ -630,24 +612,20 @@ function buildFamilyStage(stageEl, onClick){
     });
   }
 
-  // update once images load (and on resize)
   const imgs = $$('img', stageEl);
   let pending = imgs.length;
   imgs.forEach(im=>{
     if(im.complete) { pending--; }
     else im.addEventListener('load', ()=>{ pending--; if(pending<=0) updateLines(); }, {once:true});
   });
-  // fallback + resize
   setTimeout(updateLines, 80);
   window.addEventListener('resize', ()=>setTimeout(updateLines, 80));
-
-  return { updateLines };
 }
 
 /* ===== Top navigation ===== */
 const gameTitles = [
   'Lauschter a klick',
-  'Schreif d’Wuert',
+  'Lauschter a schreiw',
   'Wie sinn ech?',
   'Mäi oder meng?',
   'Stell Froen'
@@ -669,7 +647,7 @@ function showGame(i){
 $('#prev').addEventListener('click', ()=>showGame(currentIndex-1));
 $('#next').addEventListener('click', ()=>showGame(currentIndex+1));
 
-/* ===== Audio vocab (Game 1) ===== */
+/* ===== Audio vocab ===== */
 const AUDIO_BASE = 'https://github.com/albrechtclaire1007/p3famill/raw/refs/heads/main/';
 const WORD_AUDIO = {
   bom: 'BOM.mp3',
@@ -694,7 +672,7 @@ function playWordAudio(key){
 }
 
 /* =========================
-   GAME 1: listen + click
+   GAME 1
 ========================= */
 const g1 = (()=> {
   let started=false;
@@ -778,9 +756,7 @@ const g1 = (()=> {
   function ensure(){
     if(started) return;
     started=true;
-
     buildFamilyStage($('#fam1'), handleClick);
-
     $('#g1Play').addEventListener('click', ()=>{ if(current) playWordAudio(current.word); });
     $('#g1Restart').addEventListener('click', restart);
     restart();
@@ -790,115 +766,79 @@ const g1 = (()=> {
 })();
 
 /* =========================
-   GAME 2: write the word (letters click/place/remove)
+   GAME 2: listen + write
 ========================= */
 const g2 = (()=> {
   let started=false;
   let round=0;
   const total=20;
-
-  const WORDS = [
-    {word:'MAMM', hint:'Schreif:', label:'Mamm'},
-    {word:'PAPP', hint:'Schreif:', label:'Papp'},
-    {word:'BOM', hint:'Schreif:', label:'Bom'},
-    {word:'BOP', hint:'Schreif:', label:'Bop'},
-    {word:'MONNI', hint:'Schreif:', label:'Monni'},
-    {word:'TATTA', hint:'Schreif:', label:'Tatta'},
-    {word:'BRUDDER', hint:'Schreif:', label:'Brudder'},
-    {word:'SCHWESTER', hint:'Schreif:', label:'Schwëster'},
-    {word:'COUSIN', hint:'Schreif:', label:'Cousin'},
-    {word:'COUSINE', hint:'Schreif:', label:'Cousine'},
-    {word:'DUECHTER', hint:'Schreif:', label:'Duechter'},
-    {word:'BOUF', hint:'Schreif:', label:'Bouf'},
-    {word:'FRA', hint:'Schreif:', label:'Fra'},
-    {word:'MANN', hint:'Schreif:', label:'Mann'},
-  ];
-
   let items=[], current=null;
-  let slots=[], picked=[]; // picked letters per slot index
+
+  const BANK = [
+    {key:'mamm', model:'mamm'},
+    {key:'papp', model:'papp'},
+    {key:'bom', model:'bom'},
+    {key:'bop', model:'bop'},
+    {key:'monni', model:'monni'},
+    {key:'tatta', model:'tatta'},
+    {key:'brudder', model:'brudder'},
+    {key:'schwester', model:'schwester'},
+    {key:'cousin', model:'cousin'},
+    {key:'cousine', model:'cousine'},
+    {key:'duechter', model:'duechter'},
+    {key:'bouf', model:'bouf'},
+    {key:'fra', model:'fra'},
+    {key:'mann', model:'mann'},
+  ];
 
   function buildItems(){
     const many=[];
-    while(many.length < total) many.push(...WORDS);
+    while(many.length < total) many.push(...BANK);
     items = shuffle(many).slice(0,total);
   }
 
-  function makeSlots(n){
-    const holder = $('#g2Slots');
-    holder.innerHTML='';
-    slots = [];
-    picked = new Array(n).fill('');
-    for(let i=0;i<n;i++){
-      const s = document.createElement('button');
-      s.type='button';
-      s.className='letterSlot';
-      s.setAttribute('aria-label','Buschtaf');
-      s.addEventListener('click', ()=>{
-        // remove letter from this slot
-        if(!picked[i]) return;
-        picked[i]='';
-        s.textContent='';
-        s.classList.remove('filled');
-        $('#g2Status').textContent='Klick';
-      });
-      holder.appendChild(s);
-      slots.push(s);
-    }
-  }
-
-  function nextEmptyIndex(){
-    return picked.findIndex(x=>!x);
-  }
-
-  function currentString(){
-    return picked.join('');
+  function norm(s){
+    return (s||'')
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g,'')
+      .replace(/[’']/g,"'"); // normalize apostrophes if ever needed
   }
 
   function render(){
     current = items[round];
     $('#g2Prog').textContent = `${round+1} vun ${total}`;
-    $('#g2Status').textContent = 'Klick';
-    $('#g2Prompt').textContent = `${current.hint} ${current.label}`;
+    $('#g2Status').textContent = 'Lauschter';
+    $('#g2Input').value = '';
+    $('#g2Input').focus({preventScroll:true});
+  }
 
-    const letters = shuffle(current.word.split('')); // required letters only
-    makeSlots(letters.length);
+  function play(){
+    if(!current) return;
+    playWordAudio(current.key);
+    $('#g2Status').textContent = 'Lauschter';
+  }
 
-    const bank = $('#g2Bank');
-    bank.innerHTML='';
-    letters.forEach(ch=>{
-      const b = document.createElement('button');
-      b.type='button';
-      b.className='letterBtn';
-      b.textContent = ch;
-      b.addEventListener('click', ()=>{
-        const idx = nextEmptyIndex();
-        if(idx<0) return;
-        picked[idx]=ch;
-        slots[idx].textContent=ch;
-        slots[idx].classList.add('filled');
+  function check(){
+    const answer = norm($('#g2Input').value);
+    const correct = norm(current.model);
+    const ok = (answer === correct);
 
-        if(nextEmptyIndex()<0){
-          // auto-check when full
-          const ok = (currentString() === current.word);
-          $('#g2Status').textContent = ok ? 'Richteg' : 'Probéier nach eng Kéier';
-          flash($('#g2Status'), ok);
+    $('#g2Status').textContent = ok ? 'Richteg' : 'Probéier nach eng Kéier';
+    flash($('#g2Status'), ok);
 
-          if(ok){
-            setTimeout(()=>{
-              round++;
-              if(round>=total){
-                $('#g2Status').textContent='Fäerdeg';
-                $('#g2Prompt').textContent='Alles richteg!';
-                $('#g2Bank').innerHTML='';
-                return;
-              }
-              render();
-            }, 650);
-          }
+    if(ok){
+      setTimeout(()=>{
+        round++;
+        if(round>=total){
+          $('#g2Status').textContent='Fäerdeg';
+          $('#g2Prompt').textContent='Alles richteg!';
+          $('#g2Input').blur();
+          return;
         }
-      });
-      bank.appendChild(b);
-    });
+        render();
+      }, 650);
+    }
   }
 
   function restart(){
@@ -910,7 +850,15 @@ const g2 = (()=> {
   function ensure(){
     if(started) return;
     started=true;
+    $('#g2Play').addEventListener('click', play);
+    $('#g2Check').addEventListener('click', check);
     $('#g2Restart').addEventListener('click', restart);
+
+    // Enter to check
+    $('#g2Input').addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){ e.preventDefault(); check(); }
+    });
+
     restart();
   }
 
@@ -918,7 +866,7 @@ const g2 = (()=> {
 })();
 
 /* =========================
-   GAME 3: who am I? (D' fix, replay icon, no “Wielt”)
+   GAME 3
 ========================= */
 const g3 = (()=> {
   let started=false;
@@ -970,7 +918,7 @@ const g3 = (()=> {
     opts.forEach(pid=>{
       const b = document.createElement('button');
       b.className='btn btnPrimary';
-      b.textContent = withArticle(pid); // D'Elisa etc
+      b.textContent = withArticle(pid);
       b.addEventListener('click', ()=>{
         if(!canAnswer) return;
         const good = (pid===current.answer);
@@ -1009,9 +957,7 @@ const g3 = (()=> {
 })();
 
 /* =========================
-   GAME 4: mäi / meng only, no shuffle options,
-   Elisa has NO son/daughter; use “heescht”
-   + include all people/relations
+   GAME 4 (mäi/meng only)
 ========================= */
 const g4 = (()=> {
   let started=false;
@@ -1021,11 +967,9 @@ const g4 = (()=> {
   let current=null;
   let canAnswer=true;
 
-  // Fixed order, no shuffle:
-  const CHOICES = ['mäi','meng'];
+  const CHOICES = ['mäi','meng']; // fixed order
 
   const BANK = [
-    // Elisa (NO duechter/bouf)
     {line:`${withArticle('elisa')}: ___ Mamm heescht Josephine.`, correct:"meng"},
     {line:`${withArticle('elisa')}: ___ Papp heescht Romain.`, correct:"mäi"},
     {line:`${withArticle('elisa')}: ___ Bom heescht Katrine.`, correct:"meng"},
@@ -1034,12 +978,10 @@ const g4 = (()=> {
     {line:`${withArticle('elisa')}: ___ Tatta heescht Jeanne.`, correct:"meng"},
     {line:`${withArticle('elisa')}: ___ Cousin heescht Robin.`, correct:"mäi"},
 
-    // Robin
     {line:`${withArticle('robin')}: ___ Mamm heescht Jeanne.`, correct:"meng"},
     {line:`${withArticle('robin')}: ___ Papp heescht Jean.`, correct:"mäi"},
-    {line:`${withArticle('robin')}: ___ Cousine heescht Elisa.`, correct:"meng"}, // cousine is fem => meng
+    {line:`${withArticle('robin')}: ___ Cousine heescht Elisa.`, correct:"meng"},
 
-    // Jean / Jeanne / Josiane / Romain / René / Katrine
     {line:`${withArticle('jean')}: ___ Mamm heescht Katrine.`, correct:"meng"},
     {line:`${withArticle('jean')}: ___ Fra heescht Jeanne.`, correct:"meng"},
     {line:`${withArticle('jeanne')}: ___ Mann heescht Jean.`, correct:"mäi"},
@@ -1049,8 +991,6 @@ const g4 = (()=> {
   ];
 
   function buildItems(){
-    // keep as-is order set? you asked “don’t reshuffle the answer options” (not the items),
-    // but we can still randomize items for variety:
     items = shuffle(BANK).slice(0, total);
   }
 
@@ -1108,21 +1048,18 @@ const g4 = (()=> {
 })();
 
 /* =========================
-   GAME 5: example blank, identical slots,
-   replace mäin with mäi (already)
+   GAME 5
 ========================= */
 const g5 = (()=> {
   let started=false;
   let round=0;
   const total=16;
 
-  let state = { askTo:'robin', pron:'___', rel:'___' };
+  let state = { askTo:'robin' };
 
-  // ask forms
-  const PRON_OPTS = ['däi','deng'];   // (question)
+  const PRON_OPTS = ['däi','deng'];
   const REL_OPTS  = ['Mamm','Papp','Bom','Bop','Monni','Tatta','Cousin','Cousine'];
 
-  // factual answers for THIS family (no empty relations shown)
   const ANSWERS = {
     robin:  { Mamm:'Jeanne', Papp:'Jean', Bom:'Katrine', Bop:'René', Monni:'Romain', Tatta:'Josiane', Cousin:'', Cousine:'Elisa' },
     elisa:  { Mamm:'Josiane', Papp:'Romain', Bom:'Katrine', Bop:'René', Monni:'Jean', Tatta:'Jeanne', Cousin:'Robin', Cousine:'' }
@@ -1132,8 +1069,6 @@ const g5 = (()=> {
   function expectedPron(rel){ return FEM_REL.has(rel) ? 'deng' : 'däi'; }
 
   function resetBuild(){
-    state.pron='___';
-    state.rel='___';
     $('#g5Pron').textContent='___';
     $('#g5Rel').textContent='___';
     $('#g5Answer').style.display='none';
@@ -1142,13 +1077,7 @@ const g5 = (()=> {
 
   function pickRound(){
     state.askTo = (Math.random()<0.5) ? 'robin' : 'elisa';
-    const possible = REL_OPTS.filter(r=>!!ANSWERS[state.askTo][r]);
-    state.rel = possible[Math.floor(Math.random()*possible.length)];
-    state.pron = expectedPron(state.rel);
-
-    // BUT we keep the example blank until the user clicks:
     resetBuild();
-
     $('#g5Prog').textContent = `${round+1} vun ${total}`;
   }
 
@@ -1159,9 +1088,7 @@ const g5 = (()=> {
       const b = document.createElement('button');
       b.className='btn btnPrimary';
       b.textContent=p;
-      b.addEventListener('click', ()=>{
-        $('#g5Pron').textContent = p;
-      });
+      b.addEventListener('click', ()=>{ $('#g5Pron').textContent = p; });
       pHolder.appendChild(b);
     });
 
@@ -1172,9 +1099,7 @@ const g5 = (()=> {
       const b = document.createElement('button');
       b.className='btn btnPrimary';
       b.textContent=r;
-      b.addEventListener('click', ()=>{
-        $('#g5Rel').textContent = r;
-      });
+      b.addEventListener('click', ()=>{ $('#g5Rel').textContent = r; });
       rHolder.appendChild(b);
     });
   }
@@ -1241,4 +1166,5 @@ showGame(0);
 
 </body>
 </html>
+
 
