@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>P3 – Famill (5 Spiller)</title>
+<title>P3 – Layout Master</title>
 
 <style>
 @font-face{
@@ -13,23 +13,25 @@
 }
 
 :root{
+  /* P3 light blue background */
   --bg1:#E7F5FF;
   --bg2:#CFEAFF;
 
+  /* bar + accents */
   --bar:#6FAFE6;
   --barBorder:#4D90CD;
 
-  --ink:#173c57;
+  --ink:#1f1f1f;
   --white:#fff;
-
   --border:3px;
   --shadow:0 10px 24px rgba(0,0,0,.08);
   --pad:clamp(10px,2.2vw,16px);
   --r:18px;
 
+  /* icons */
   --iconArrow:"https://i.postimg.cc/QBYTSN08/p3arrow.png";
+  --iconPlay:"https://i.postimg.cc/ZB9yQkMt/p3play.png";
   --iconReplay:"https://i.postimg.cc/ft30P4rQ/p3replay.png";
-  --iconListen:"https://i.postimg.cc/CxTDPSqd/p3lauschter.png";
 }
 
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; outline:none;}
@@ -42,7 +44,7 @@ html,body{
 
 .hidden{display:none!important;}
 
-/* ===== TOP BAR (arrows only) ===== */
+/* ===== TOP BAR (everything inside) ===== */
 .topBar{
   position:sticky; top:10px; z-index:10;
   width:min(1200px,96vw);
@@ -54,7 +56,7 @@ html,body{
   padding:10px 12px;
 
   display:grid;
-  grid-template-columns: 70px 1fr 70px;
+  grid-template-columns: 70px 1fr auto;
   align-items:center;
   gap:10px;
 }
@@ -69,16 +71,25 @@ html,body{
 }
 .barBtn:active{transform:scale(.98);}
 .barBtn img{width:46px; height:46px; object-fit:contain;}
+
 .barBtn.back img{transform:rotate(180deg);}
 
 .barTitle{
   text-align:center;
   color:#fff;
-  font-size:clamp(1.4rem,3.0vw,2.2rem);
+  font-size:clamp(1.5rem,3.2vw,2.4rem);
   margin:0;
   line-height:1.1;
   padding:0 6px;
 }
+
+.barRight{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.barRight .barBtn{width:50px; height:50px;}
+.barRight .barBtn img{width:42px; height:42px;}
 
 /* ===== CONTENT ===== */
 .wrap{
@@ -91,237 +102,26 @@ html,body{
 }
 
 .card{
-  background:rgba(255,255,255,.85);
+  background:rgba(255,255,255,.8);
   border:var(--border) solid rgba(255,255,255,.65);
   border-radius:var(--r);
   box-shadow:var(--shadow);
   padding:clamp(12px,2.2vw,18px);
 }
 
-.inst{
-  border:var(--border) dashed rgba(77,144,205,.55);
-  background:rgba(231,245,255,.55);
-  border-radius:16px;
-  padding:12px 14px;
-  font-size:clamp(1.05rem,2.1vw,1.25rem);
-  line-height:1.2;
+.cardTitle{
+  margin:0 0 8px 0;
+  font-size:clamp(1.1rem,2.2vw,1.5rem);
+  opacity:.9;
 }
 
-.row{display:flex; gap:14px; flex-wrap:wrap; align-items:stretch; justify-content:center; margin-top:12px;}
-.col{flex:1 1 360px; min-width:280px;}
-.center{display:grid; place-items:center;}
-
-.badge{
-  border:var(--border) solid rgba(23,60,87,.55);
-  background:#fff;
-  border-radius:999px;
-  padding:8px 12px;
-  font-size:1.08rem;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-}
-.muted{opacity:.78;}
-
-.scoreLine{
-  display:flex; justify-content:space-between; align-items:center;
-  gap:10px; flex-wrap:wrap;
-  margin-top:12px;
-}
-
-.btn{
-  border:var(--border) solid rgba(23,60,87,.65);
-  background:#fff;
-  color:var(--ink);
-  padding:.55rem .95rem;
-  border-radius:16px;
-  cursor:pointer;
-  font-size:1.12rem;
-  font-family:'Schoulschrëft', Arial, sans-serif;
-  box-shadow:0 5px 16px rgba(0,0,0,.07);
-}
-.btn:active{ transform:scale(.98); }
-.btnPrimary{
-  background:linear-gradient(180deg,#ffffff 0%, #f3fbff 100%);
-  border-color:rgba(77,144,205,.75);
-}
-.btnSmall{font-size:1rem; padding:.45rem .75rem; border-radius:14px;}
-
-.imgBtn{
-  border:none;
-  background:transparent;
-  cursor:pointer;
-  width:54px; height:54px;
-  display:grid; place-items:center;
-}
-.imgBtn img{width:46px; height:46px; object-fit:contain;}
-.imgBtn:active{transform:scale(.98);}
-
-.flash-good{ background:#b7f0c8!important; border-color:#b7f0c8!important; }
-.flash-bad{ background:#ffcccc!important; border-color:#ffcccc!important; }
-
-.qTitle{
-  font-size:clamp(1.25rem,2.2vw,1.55rem);
-  margin-top:10px;
-  text-align:center;
-  line-height:1.15;
-}
-
-.optGrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
-  gap:12px;
-  margin-top:10px;
-}
-
-.bubble{
-  border:var(--border) solid rgba(23,60,87,.55);
-  border-radius:18px;
-  padding:12px 14px;
-  background:linear-gradient(180deg,#fff 0%, #f7fbff 100%);
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-  font-size:1.2rem;
-  line-height:1.15;
-}
-
-/* unified slots */
-.slot{
-  display:inline-grid;
-  place-items:center;
-  width:140px;
-  height:42px;
-  padding:0 10px;
+.placeholder{
+  border:3px dashed rgba(0,0,0,.2);
   border-radius:14px;
-  border:2px dashed rgba(23,60,87,.40);
-  text-align:center;
-  background:rgba(231,245,255,.65);
-  vertical-align:middle;
-}
-
-/* ===== FAMILY TREE ===== */
-.famWrap{
-  width:min(820px, 92vw);
-  border:var(--border) solid rgba(77,144,205,.75);
-  border-radius:18px;
-  overflow:hidden;
-  background:#fff;
-  box-shadow:0 8px 18px rgba(0,0,0,.08);
-  padding:14px;
-}
-.famStage{
-  position:relative;
-  width:100%;
-  aspect-ratio: 4 / 3;
-  border-radius:14px;
-  background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);
-  border:2px solid rgba(23,60,87,.12);
-  overflow:hidden;
-}
-.famLines{
-  position:absolute; inset:0;
-  z-index:1;
-  pointer-events:none;
-  opacity:.75;
-}
-.personCard{
-  position:absolute;
-  z-index:2;
-  width:16%;
-  min-width:92px;
-  max-width:150px;
-  transform:translate(-50%,-50%);
-  border:var(--border) solid rgba(23,60,87,.65);
-  border-radius:14px;
-  background:#fff;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-  cursor:pointer;
-  padding:8px;
-  display:grid;
-  gap:6px;
-  justify-items:center;
-}
-.personCard:active{ transform:translate(-50%,-50%) scale(.99); }
-.personCard img{
-  width:100%;
-  aspect-ratio: 1 / 1;
-  object-fit:cover;
-  border-radius:10px;
-  border:2px solid rgba(23,60,87,.12);
-  background:#fff;
-}
-.personName{
-  font-family:'Schoulschrëft', Arial, sans-serif;
+  padding:18px;
+  background:rgba(255,255,255,.55);
   font-size:1.05rem;
-  line-height:1;
-  text-align:center;
-}
-.personCard.good{ background:rgba(183,240,200,.45); border-color:rgba(183,240,200,.0); }
-.personCard.bad{  background:rgba(255,204,204,.55); border-color:rgba(255,204,204,.0); }
-
-/* ===== GAME 2: Lauschter a schreif (click letters) ===== */
-.wordBuild{
-  width:min(820px,92vw);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-
-.listenBtn{
-  border:none;
-  background:transparent;
-  cursor:pointer;
-  width:72px; height:72px;
-  display:grid; place-items:center;
-}
-.listenBtn img{width:64px; height:64px; object-fit:contain;}
-.listenBtn:active{transform:scale(.98);}
-
-.letterSlots{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-top:4px;
-}
-.letterSlot{
-  width:46px;
-  height:52px;
-  border-radius:14px;
-  border:2px dashed rgba(23,60,87,.40);
-  background:rgba(231,245,255,.65);
-  display:grid;
-  place-items:center;
-  font-family:'Schoulschrëft', Arial, sans-serif; /* force */
-  font-size:1.8rem;
-  cursor:pointer;
-}
-.letterSlot.filled{
-  border-style:solid;
-  background:#fff;
-}
-.letterBank{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-top:2px;
-}
-.letterBtn{
-  width:56px; height:56px;
-  border-radius:18px;
-  border:var(--border) solid rgba(23,60,87,.65);
-  background:linear-gradient(180deg,#ffffff 0%, #f3fbff 100%);
-  cursor:pointer;
-  font-family:'Schoulschrëft', Arial, sans-serif; /* force */
-  font-size:1.9rem;
-  display:grid; place-items:center;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-}
-.letterBtn:active{transform:scale(.98);}
-
-.helperLine{
-  text-align:center;
-  font-size:1.15rem;
-  opacity:.92;
+  opacity:.85;
 }
 </style>
 </head>
@@ -333,152 +133,221 @@ html,body{
     <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
   </button>
 
-  <h1 class="barTitle" id="gameTitle">Lauschter a klick</h1>
+  <h1 class="barTitle" id="gameTitle">Spill 1: Lauschter a klick</h1>
 
-  <button class="barBtn" id="next" aria-label="Nächst">
-    <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
-  </button>
+  <div class="barRight">
+    <button class="barBtn" id="play" aria-label="Play">
+      <img src="https://i.postimg.cc/ZB9yQkMt/p3play.png" alt="">
+    </button>
+    <button class="barBtn" id="replay" aria-label="Replay">
+      <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
+    </button>
+    <button class="barBtn" id="next" aria-label="Nächst">
+      <img src="https://i.postimg.cc/QBYTSN08/p3arrow.png" alt="">
+    </button>
+  </div>
 </div>
 
 <div class="wrap">
 
-  <!-- GAME 1 -->
-  <section class="card" id="g1">
-    <div class="inst">
-      <b>Spill 1: Lauschter a klick</b><br/>
-      Lauschter (🔊) a klick déi richteg Persoun.
+  <!-- STEP 1 -->
+  <section class="card" id="step1">
+    <p class="cardTitle">Spill 1: Kuck d'Bild wien schwätzt. Lauschter a fann déi richteg Persoun.</p>
+
+    <div style="display:flex; justify-content:center;">
+      <div id="famStage"
+        style="
+          width:min(860px,92vw);
+          aspect-ratio:4/3;
+          position:relative;
+          border:var(--border) solid rgba(77,144,205,.75);
+          border-radius:18px;
+          overflow:hidden;
+          background:#fff;
+          box-shadow:var(--shadow);
+        ">
+        <div id="famBg"
+          style="
+            position:absolute; inset:0;
+            background-size:cover;
+            background-position:center;
+            opacity:.30;
+            pointer-events:none;
+            display:none;
+          "></div>
+      </div>
     </div>
 
-    <div class="row">
-      <div class="col center">
-        <div class="famWrap">
-          <div class="famStage" id="fam1"></div>
+    <div style="display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:12px;">
+      <img id="g1SpeakerImg" alt="" style="width:58px;height:58px;border-radius:16px;border:var(--border) solid rgba(31,31,31,.35);object-fit:cover;background:#fff;">
+      <button id="g1ListenBtn" type="button"
+        style="border:none;background:transparent;cursor:pointer;width:72px;height:72px;display:grid;place-items:center;">
+        <img src="https://i.postimg.cc/CxTDPSqd/p3lauschter.png" alt="" style="width:64px;height:64px;object-fit:contain;">
+      </button>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:10px;">
+      <span id="g1Prog"
+        style="border:var(--border) solid rgba(31,31,31,.28);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.08);">
+        1 vun 20
+      </span>
+      <span id="g1Status"
+        style="border:var(--border) solid rgba(31,31,31,.18);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.06);opacity:.85;">
+        Lauschter
+      </span>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="card hidden" id="step2">
+    <p class="cardTitle" style="margin-bottom:14px;">Lauschter a schreif.</p>
+
+    <div style="display:flex; justify-content:center;">
+      <div style="width:min(860px,92vw); display:flex; flex-direction:column; align-items:center; gap:12px;">
+
+        <button id="g2ListenBtn" type="button"
+          style="border:none;background:transparent;cursor:pointer;width:88px;height:88px;display:grid;place-items:center;">
+          <img src="https://i.postimg.cc/CxTDPSqd/p3lauschter.png" alt="" style="width:72px;height:72px;object-fit:contain;">
+        </button>
+
+        <div id="g2Slots" style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;"></div>
+
+        <div id="g2Bank" style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;"></div>
+
+        <div style="width:min(860px,92vw); display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:6px;">
+          <span id="g2Prog"
+            style="border:var(--border) solid rgba(31,31,31,.28);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.08);">
+            1 vun 20
+          </span>
+          <span id="g2Helper"
+            style="border:var(--border) solid rgba(31,31,31,.18);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.06);opacity:.85;">
+            Lauschter…
+          </span>
         </div>
 
-        <div style="display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:10px;">
-          <img class="avatar" id="g1SpeakerImg" alt="Speaker" style="width:54px;height:54px;border-radius:16px;border:var(--border) solid rgba(23,60,87,.65);object-fit:cover;">
-          <button class="btn btnSmall btnPrimary" id="g1Play" title="Audio" style="font-size:1.2rem;">🔊 Lauschter</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="card hidden" id="step3">
+    <p class="cardTitle">Spill 3: Wie sinn ech?</p>
+
+    <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:stretch; justify-content:center; margin-top:6px;">
+      <div style="flex:1 1 360px; min-width:280px;">
+        <div id="g3Clue"
+          style="border:var(--border) solid rgba(31,31,31,.24);border-radius:18px;padding:14px 16px;background:linear-gradient(180deg,#fff 0%, #f7fbff 100%);box-shadow:0 6px 16px rgba(0,0,0,.08);font-size:1.2rem;line-height:1.18;">
         </div>
 
-        <div class="qTitle" id="g1Text"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <span id="g3Prog"
+            style="border:var(--border) solid rgba(31,31,31,.28);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.08);">
+            1 vun 16
+          </span>
+          <span id="g3Status"
+            style="border:var(--border) solid rgba(31,31,31,.18);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.06);opacity:.85;">
+            Wielt
+          </span>
+        </div>
+      </div>
 
-        <div class="scoreLine">
-          <span class="badge" id="g1Prog">1 vun 20</span>
-          <button class="imgBtn" id="g1Restart" aria-label="Replay">
-            <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
-          </button>
-          <span class="badge muted" id="g1Status">Lauschter</span>
+      <div style="flex:1 1 360px; min-width:280px;">
+        <div id="g3Options"
+          style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- GAME 2 (FINAL REQUEST) -->
-  <section class="card hidden" id="g2">
-    <div class="inst">
-      <b>Lauschter a schreif.</b><br/>
-      Lauschter, a schreif d’Wuert.
-    </div>
+  <!-- STEP 4 -->
+  <section class="card hidden" id="step4">
+    <p class="cardTitle">Spill 4: Mäi oder meng?</p>
 
-    <div class="row">
-      <div class="col center">
-        <div class="wordBuild">
+    <div style="display:flex; justify-content:center;">
+      <div style="width:min(860px,92vw);">
+        <div id="g4Line"
+          style="border:var(--border) solid rgba(31,31,31,.24);border-radius:18px;padding:14px 16px;background:linear-gradient(180deg,#fff 0%, #f7fbff 100%);box-shadow:0 6px 16px rgba(0,0,0,.08);font-size:1.25rem;line-height:1.15;text-align:center;">
+        </div>
 
-          <!-- listen again button -->
-          <button class="listenBtn" id="g2Listen" aria-label="Lauschter nach eng Kéier">
-            <img src="https://i.postimg.cc/CxTDPSqd/p3lauschter.png" alt="">
-          </button>
+        <div id="g4Options"
+          style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top:12px;">
+        </div>
 
-          <div class="helperLine" id="g2Helper">Lauschter…</div>
-
-          <div class="letterSlots" id="g2Slots"></div>
-          <div class="letterBank" id="g2Bank"></div>
-
-          <div class="scoreLine" style="width:min(820px,92vw);">
-            <span class="badge" id="g2Prog">1 vun 20</span>
-            <button class="imgBtn" id="g2Restart" aria-label="Replay">
-              <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
-            </button>
-            <!-- removed the useless “Lauschter” pill -->
-          </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <span id="g4Prog"
+            style="border:var(--border) solid rgba(31,31,31,.28);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.08);">
+            1 vun 16
+          </span>
+          <span id="g4Status"
+            style="border:var(--border) solid rgba(31,31,31,.18);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.06);opacity:.85;">
+            Wielt
+          </span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- GAME 3 -->
-  <section class="card hidden" id="g3">
-    <div class="inst">
-      <b>Spill 3: Wie sinn ech?</b><br/>
-      Lies den Hiweis a wielt déi richteg Persoun.
-    </div>
+  <!-- STEP 5 -->
+  <section class="card hidden" id="step5">
+    <p class="cardTitle">Stell Froen. Klick op d'Pronomen an d'Leit. Kontrolléier op et richteg ass</p>
 
-    <div class="row">
-      <div class="col">
-        <div class="bubble" id="g3Clue"></div>
-        <div class="scoreLine">
-          <span class="badge" id="g3Prog">1 vun 20</span>
-          <button class="imgBtn" id="g3Restart" aria-label="Replay">
-            <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
+    <div style="display:flex; justify-content:center;">
+      <div style="width:min(860px,92vw);">
+
+        <div id="g5Context"
+          style="border:var(--border) solid rgba(31,31,31,.16);border-radius:18px;padding:12px 14px;background:rgba(255,255,255,.7);box-shadow:0 6px 16px rgba(0,0,0,.06);font-size:1.1rem;opacity:.9;">
+        </div>
+
+        <div id="g5Build"
+          style="margin-top:10px;border:var(--border) solid rgba(31,31,31,.24);border-radius:18px;padding:14px 16px;background:linear-gradient(180deg,#fff 0%, #f7fbff 100%);box-shadow:0 6px 16px rgba(0,0,0,.08);font-size:1.22rem;line-height:1.15;">
+          Wéi heescht
+          <span id="g5SlotPron"
+            style="display:inline-grid;place-items:center;min-width:130px;height:42px;padding:0 10px;border-radius:14px;border:2px dashed rgba(31,31,31,.30);background:rgba(231,245,255,.65);vertical-align:middle;">
+            ___
+          </span>
+          <span id="g5SlotRel"
+            style="display:inline-grid;place-items:center;min-width:160px;height:42px;padding:0 10px;border-radius:14px;border:2px dashed rgba(31,31,31,.30);background:rgba(231,245,255,.65);vertical-align:middle;">
+            ___
+          </span>
+          ?
+        </div>
+
+        <div style="margin-top:12px;">
+          <div style="font-size:1.05rem; opacity:.85; margin-bottom:6px;">Pronomen</div>
+          <div id="g5PronOpts" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div style="font-size:1.05rem; opacity:.85; margin-bottom:6px;">Leit</div>
+          <div id="g5PeopleOpts" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div style="font-size:1.05rem; opacity:.85; margin-bottom:6px;">Wierder</div>
+          <div id="g5RelOpts" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+        </div>
+
+        <div id="g5Answer"
+          style="display:none;margin-top:12px;border:var(--border) solid rgba(31,31,31,.18);border-radius:18px;padding:12px 14px;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.06);font-size:1.12rem;">
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <span id="g5Prog"
+            style="border:var(--border) solid rgba(31,31,31,.28);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.08);">
+            1 vun 18
+          </span>
+
+          <button id="g5Check" type="button"
+            style="border:var(--border) solid rgba(31,31,31,.35);background:#fff;color:var(--ink);padding:.55rem .95rem;border-radius:16px;cursor:pointer;font-size:1.08rem;font-family:'Schoulschrëft', Arial, sans-serif;box-shadow:0 5px 16px rgba(0,0,0,.07);">
+            Kontrolléieren
           </button>
-        </div>
-      </div>
 
-      <div class="col">
-        <div class="optGrid" id="g3Options"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GAME 4 -->
-  <section class="card hidden" id="g4">
-    <div class="inst">
-      <b>Spill 4: Mäi oder meng?</b><br/>
-      Wielt <b>mäi</b> oder <b>meng</b> (d’Optiounen bleiwen ëmmer an der selwechter Reiefolleg).
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="bubble" id="g4Line"></div>
-        <div class="optGrid" id="g4Options"></div>
-
-        <div class="scoreLine">
-          <span class="badge" id="g4Prog">1 vun 16</span>
-          <button class="imgBtn" id="g4Restart" aria-label="Replay">
-            <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
-          </button>
-          <span class="badge muted" id="g4Status">Wielt</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GAME 5 -->
-  <section class="card hidden" id="g5">
-    <div class="inst">
-      <b>Spill 5: Stell Froen</b><br/>
-      Baue d’Fro. D’Beispill bleift eidel.
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="bubble" id="g5Build">
-          Wéi heescht <span class="slot" id="g5Pron">___</span> <span class="slot" id="g5Rel">___</span>?
+          <span id="g5Status"
+            style="border:var(--border) solid rgba(31,31,31,.18);background:#fff;border-radius:999px;padding:8px 12px;font-size:1.08rem;box-shadow:0 6px 16px rgba(0,0,0,.06);opacity:.85;">
+            Baue
+          </span>
         </div>
 
-        <div class="optGrid" id="g5PronOpts"></div>
-        <div class="optGrid" id="g5RelOpts" style="margin-top:12px;"></div>
-
-        <div class="bubble" id="g5Answer" style="margin-top:12px; display:none;"></div>
-
-        <div class="scoreLine">
-          <span class="badge" id="g5Prog">1 vun 16</span>
-          <button class="imgBtn" id="g5Restart" aria-label="Replay">
-            <img src="https://i.postimg.cc/ft30P4rQ/p3replay.png" alt="">
-          </button>
-          <button class="btn btnSmall" id="g5Check">Kontrolléieren</button>
-          <span class="badge muted" id="g5Status">Baue</span>
-        </div>
       </div>
     </div>
   </section>
@@ -486,6 +355,10 @@ html,body{
 </div>
 
 <script>
+/* =========================
+   HOOKS (only JS changes)
+========================= */
+
 const $ = (sel, root=document)=>root.querySelector(sel);
 const $$ = (sel, root=document)=>Array.from(root.querySelectorAll(sel));
 
@@ -497,196 +370,129 @@ function shuffle(arr){
   }
   return a;
 }
-function flash(el, good=true){
-  el.classList.remove('flash-good','flash-bad');
-  el.classList.add(good ? 'flash-good' : 'flash-bad');
-  setTimeout(()=>el.classList.remove('flash-good','flash-bad'), 320);
-}
-function flashCard(el, good=true){
-  el.classList.remove('good','bad');
-  el.classList.add(good ? 'good' : 'bad');
-  setTimeout(()=>el.classList.remove('good','bad'), 420);
+
+function setPillState(btn, on){
+  btn.style.borderColor = on ? "rgba(77,144,205,.95)" : "rgba(31,31,31,.35)";
+  btn.style.boxShadow = on ? "0 8px 18px rgba(77,144,205,.22)" : "0 5px 16px rgba(0,0,0,.07)";
+  btn.style.transform = on ? "scale(1.01)" : "scale(1)";
 }
 
-/* PEOPLE */
-const PEOPLE = {
-  rene:   {name:'René',   img:'https://i.postimg.cc/zbTCM0Mv/rene.png'},
-  katrine:{name:'Katrine',img:'https://i.postimg.cc/fSZchYnH/katrine.png'},
-  romain: {name:'Romain', img:'https://i.postimg.cc/D4FrK1k5/romain.png'},
-  josiane:{name:'Josiane',img:'https://i.postimg.cc/5Q1BM8d3/josiane.png'},
-  jean:   {name:'Jean',   img:'https://i.postimg.cc/T5GVXnMn/jean.png'},
-  jeanne: {name:'Jeanne', img:'https://i.postimg.cc/cgfRjXjg/jeanne.png'},
-  elisa:  {name:'Elisa',  img:'https://i.postimg.cc/Q9cQP0PF/elisa.png'},
-  robin:  {name:'Robin',  img:'https://i.postimg.cc/ftYcFBFk/robin.png'},
-};
-
-const POS = {
-  rene:    {x:46, y:16},
-  katrine: {x:58, y:16},
-  romain:  {x:18, y:50},
-  josiane: {x:36, y:50},
-  jean:    {x:58, y:50},
-  jeanne:  {x:80, y:50},
-  elisa:   {x:28, y:82},
-  robin:   {x:72, y:82},
-};
-
-const LINES = [
-  ['rene','katrine'],
-  ['katrine','josiane'], ['rene','josiane'],
-  ['katrine','jean'],    ['rene','jean'],
-  ['romain','josiane'],
-  ['jean','jeanne'],
-  ['romain','elisa'], ['josiane','elisa'],
-  ['jean','robin'],   ['jeanne','robin'],
-];
-
-const GIRLS = new Set(['katrine','josiane','jeanne','elisa']);
-function withArticle(id){
-  if(GIRLS.has(id)) return `D'${PEOPLE[id].name}`;
-  return `De ${PEOPLE[id].name}`;
+function flashBadge(el, good){
+  const prevBg = el.style.background;
+  const prevBd = el.style.borderColor;
+  el.style.background = good ? "#b7f0c8" : "#ffcccc";
+  el.style.borderColor = good ? "#b7f0c8" : "#ffcccc";
+  setTimeout(()=>{
+    el.style.background = prevBg;
+    el.style.borderColor = prevBd;
+  }, 320);
 }
-
-/* ===== Family stage builder with centered lines ===== */
-function buildFamilyStage(stageEl, onClick){
-  stageEl.innerHTML = '';
-
-  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-  svg.setAttribute('class','famLines');
-  svg.setAttribute('preserveAspectRatio','none');
-  svg.style.width = '100%';
-  svg.style.height = '100%';
-  stageEl.appendChild(svg);
-
-  const cards = {};
-  Object.keys(POS).forEach(id=>{
-    const card = document.createElement('button');
-    card.type='button';
-    card.className='personCard';
-    card.style.left = POS[id].x + '%';
-    card.style.top  = POS[id].y + '%';
-    card.setAttribute('aria-label', PEOPLE[id].name);
-
-    const img = document.createElement('img');
-    img.src = PEOPLE[id].img;
-    img.alt = PEOPLE[id].name;
-
-    const name = document.createElement('div');
-    name.className='personName';
-    name.textContent = PEOPLE[id].name;
-
-    card.appendChild(img);
-    card.appendChild(name);
-
-    card.addEventListener('click', ()=>onClick(id, card));
-    stageEl.appendChild(card);
-
-    cards[id] = card;
-  });
-
-  const lineEls = LINES.map(([a,b])=>{
-    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('stroke', 'rgba(23,60,87,.45)');
-    line.setAttribute('stroke-width', '3');
-    line.setAttribute('stroke-linecap', 'round');
-    svg.appendChild(line);
-    return {a,b,line};
-  });
-
-  function centerOfImage(id){
-    const card = cards[id];
-    const img = card.querySelector('img');
-    const stageRect = stageEl.getBoundingClientRect();
-    const imgRect = img.getBoundingClientRect();
-    const cx = (imgRect.left + imgRect.right)/2 - stageRect.left;
-    const cy = (imgRect.top + imgRect.bottom)/2 - stageRect.top;
-    return {cx, cy};
-  }
-
-  function updateLines(){
-    const w = stageEl.clientWidth;
-    const h = stageEl.clientHeight;
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-
-    lineEls.forEach(({a,b,line})=>{
-      const A = centerOfImage(a);
-      const B = centerOfImage(b);
-      line.setAttribute('x1', A.cx);
-      line.setAttribute('y1', A.cy);
-      line.setAttribute('x2', B.cx);
-      line.setAttribute('y2', B.cy);
-    });
-  }
-
-  const imgs = $$('img', stageEl);
-  let pending = imgs.length;
-  imgs.forEach(im=>{
-    if(im.complete) { pending--; }
-    else im.addEventListener('load', ()=>{ pending--; if(pending<=0) updateLines(); }, {once:true});
-  });
-  setTimeout(updateLines, 80);
-  window.addEventListener('resize', ()=>setTimeout(updateLines, 80));
-}
-
-/* ===== Top navigation ===== */
-const gameTitles = [
-  'Lauschter a klick',
-  'Lauschter a schreif',
-  'Wie sinn ech?',
-  'Mäi oder meng?',
-  'Stell Froen'
-];
-const sections = ['g1','g2','g3','g4','g5'];
-let currentIndex = 0;
-
-function showGame(i){
-  currentIndex = (i+sections.length) % sections.length;
-  sections.forEach((id, idx)=>$('#'+id).classList.toggle('hidden', idx!==currentIndex));
-  $('#gameTitle').textContent = gameTitles[currentIndex];
-
-  if(currentIndex===0) g1.ensure();
-  if(currentIndex===1) g2.ensure();
-  if(currentIndex===2) g3.ensure();
-  if(currentIndex===3) g4.ensure();
-  if(currentIndex===4) g5.ensure();
-}
-$('#prev').addEventListener('click', ()=>showGame(currentIndex-1));
-$('#next').addEventListener('click', ()=>showGame(currentIndex+1));
-
-/* ===== Audio vocab ===== */
-const AUDIO_BASE = 'https://github.com/albrechtclaire1007/p3famill/raw/refs/heads/main/';
-const WORD_AUDIO = {
-  bom: 'BOM.mp3',
-  bop: 'BOP.mp3',
-  bouf: 'BOUF.mp3',
-  brudder: 'BRUDDER.mp3',
-  cousin: 'COUSIN.mp3',
-  cousine: 'COUSINE.mp3',
-  duechter: 'DUECHTER.mp3',
-  fra: 'FRA.mp3',
-  mamm: 'MAMM.mp3',
-  mann: 'MANN.mp3',
-  monni: 'MONNI.mp3',
-  papp: 'PAPP.mp3',
-  schwester: 'SCHWESTER.mp3',
-  tatta: 'TATTA.mp3'
-};
 
 let currentAudio = null;
-function playWordAudio(key){
-  const src = AUDIO_BASE + WORD_AUDIO[key];
+function stopAudio(){
   if(currentAudio){
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
+    try{ currentAudio.pause(); }catch(e){}
+    try{ currentAudio.currentTime = 0; }catch(e){}
   }
+  currentAudio = null;
+}
+
+const AUDIO_BASE = "https://github.com/albrechtclaire1007/p3famill/raw/refs/heads/main/";
+const WORD_AUDIO = {
+  bom: "BOM.mp3",
+  bop: "BOP.mp3",
+  bouf: "BOUF.mp3",
+  brudder: "BRUDDER.mp3",
+  cousin: "COUSIN.mp3",
+  cousine: "COUSINE.mp3",
+  duechter: "DUECHTER.mp3",
+  fra: "FRA.mp3",
+  mamm: "MAMM.mp3",
+  mann: "MANN.mp3",
+  monni: "MONNI.mp3",
+  papp: "PAPP.mp3",
+  schwester: "SCHWESTER.mp3",
+  tatta: "TATTA.mp3"
+};
+
+function playWordAudio(key){
+  const file = WORD_AUDIO[key];
+  if(!file) return null;
+  const src = AUDIO_BASE + file;
+  stopAudio();
   currentAudio = new Audio(src);
   currentAudio.play().catch(()=>{});
   return currentAudio;
 }
 
-/* =========================
-   GAME 1 (unchanged)
-========================= */
+/* ===== DATA: People ===== */
+const PEOPLE = {
+  rene:   {name:"René",    img:"https://i.postimg.cc/zbTCM0Mv/rene.png", sex:"m"},
+  katrine:{name:"Katrine", img:"https://i.postimg.cc/fSZchYnH/katrine.png", sex:"f"},
+  romain: {name:"Romain",  img:"https://i.postimg.cc/D4FrK1k5/romain.png", sex:"m"},
+  josiane:{name:"Josiane", img:"https://i.postimg.cc/5Q1BM8d3/josiane.png", sex:"f"},
+  jean:   {name:"Jean",    img:"https://i.postimg.cc/T5GVXnMn/jean.png", sex:"m"},
+  jeanne: {name:"Jeanne",  img:"https://i.postimg.cc/cgfRjXjg/jeanne.png", sex:"f"},
+  elisa:  {name:"Elisa",   img:"https://i.postimg.cc/Q9cQP0PF/elisa.png", sex:"f"},
+  robin:  {name:"Robin",   img:"https://i.postimg.cc/ftYcFBFk/robin.png", sex:"m"}
+};
+
+const REL_WORDS = [
+  {key:"mamm", label:"Mamm", gender:"f"},
+  {key:"papp", label:"Papp", gender:"m"},
+  {key:"bom", label:"Bom", gender:"f"},
+  {key:"bop", label:"Bop", gender:"m"},
+  {key:"monni", label:"Monni", gender:"m"},
+  {key:"tatta", label:"Tatta", gender:"f"},
+  {key:"brudder", label:"Brudder", gender:"m"},
+  {key:"schwester", label:"Schwëster", gender:"f"},
+  {key:"cousin", label:"Cousin", gender:"m"},
+  {key:"cousine", label:"Cousine", gender:"f"},
+  {key:"duechter", label:"Duechter", gender:"f"},
+  {key:"bouf", label:"Bouf", gender:"m"},
+  {key:"fra", label:"Fra", gender:"f"},
+  {key:"mann", label:"Mann", gender:"m"}
+];
+
+const REL_BY_KEY = Object.fromEntries(REL_WORDS.map(x=>[x.key,x]));
+
+/* ===== STEP NAV ===== */
+const STEPS = [
+  {id:"step1", title:"Spill 1: Lauschter a klick"},
+  {id:"step2", title:"Lauschter a schreif"},
+  {id:"step3", title:"Spill 3: Wie sinn ech?"},
+  {id:"step4", title:"Spill 4: Mäi oder meng?"},
+  {id:"step5", title:"Spill 5: Stell Froen"}
+];
+let stepIndex = 0;
+
+function showStep(i){
+  stopAudio();
+  stepIndex = (i + STEPS.length) % STEPS.length;
+  STEPS.forEach((s, idx)=>$("#"+s.id).classList.toggle("hidden", idx!==stepIndex));
+  $("#gameTitle").textContent = STEPS[stepIndex].title;
+  if(stepIndex===0) g1.ensure();
+  if(stepIndex===1) g2.ensure();
+  if(stepIndex===2) g3.ensure();
+  if(stepIndex===3) g4.ensure();
+  if(stepIndex===4) g5.ensure();
+}
+
+/* ===== FAMILY TREE BACKGROUND (optional) =====
+   If you upload a blank family tree image, paste the URL here. */
+const FAMILY_BG_URL = ""; // e.g. "https://i.postimg.cc/xxxxxxx/familytree_blank.png"
+
+function applyFamilyBg(){
+  const bg = $("#famBg");
+  if(FAMILY_BG_URL){
+    bg.style.backgroundImage = `url('${FAMILY_BG_URL}')`;
+    bg.style.display = "block";
+  }else{
+    bg.style.display = "none";
+  }
+}
+
+/* ===== GAME 1: Listen + click person (no lines, optional bg) ===== */
 const g1 = (()=> {
   let started=false;
   let round=0;
@@ -695,64 +501,93 @@ const g1 = (()=> {
   let current=null;
   let canAnswer=true;
 
+  const POS = {
+    rene:    {x:44, y:14},
+    katrine: {x:60, y:14},
+    romain:  {x:18, y:50},
+    josiane: {x:38, y:50},
+    jean:    {x:58, y:50},
+    jeanne:  {x:80, y:50},
+    elisa:   {x:28, y:83},
+    robin:   {x:72, y:83}
+  };
+
   const BANK = [
-    {speaker:'elisa', word:'mamm', target:'josiane', text:`Ech sinn ${withArticle('elisa')}. Wien ass meng Mamm?`},
-    {speaker:'elisa', word:'papp', target:'romain',  text:`Ech sinn ${withArticle('elisa')}. Wien ass mäi Papp?`},
-    {speaker:'elisa', word:'bom',  target:'katrine', text:`Ech sinn ${withArticle('elisa')}. Wien ass meng Bom?`},
-    {speaker:'elisa', word:'bop',  target:'rene',    text:`Ech sinn ${withArticle('elisa')}. Wien ass mäi Bop?`},
-    {speaker:'elisa', word:'monni',target:'jean',    text:`Ech sinn ${withArticle('elisa')}. Wien ass mäi Monni?`},
-    {speaker:'elisa', word:'tatta',target:'jeanne',  text:`Ech sinn ${withArticle('elisa')}. Wien ass meng Tatta?`},
-    {speaker:'elisa', word:'cousin', target:'robin', text:`Ech sinn ${withArticle('elisa')}. Wien ass mäi Cousin?`},
+    {speaker:"elisa", word:"mamm", target:"josiane"},
+    {speaker:"elisa", word:"papp", target:"romain"},
+    {speaker:"elisa", word:"bom", target:"katrine"},
+    {speaker:"elisa", word:"bop", target:"rene"},
+    {speaker:"elisa", word:"monni", target:"jean"},
+    {speaker:"elisa", word:"tatta", target:"jeanne"},
+    {speaker:"elisa", word:"cousin", target:"robin"},
 
-    {speaker:'robin', word:'mamm', target:'jeanne',  text:`Ech sinn ${withArticle('robin')}. Wien ass meng Mamm?`},
-    {speaker:'robin', word:'papp', target:'jean',    text:`Ech sinn ${withArticle('robin')}. Wien ass mäi Papp?`},
-    {speaker:'robin', word:'bom',  target:'katrine', text:`Ech sinn ${withArticle('robin')}. Wien ass meng Bom?`},
-    {speaker:'robin', word:'bop',  target:'rene',    text:`Ech sinn ${withArticle('robin')}. Wien ass mäi Bop?`},
-    {speaker:'robin', word:'monni',target:'romain',  text:`Ech sinn ${withArticle('robin')}. Wien ass mäi Monni?`},
-    {speaker:'robin', word:'tatta',target:'josiane', text:`Ech sinn ${withArticle('robin')}. Wien ass meng Tatta?`},
-    {speaker:'robin', word:'cousine', target:'elisa',text:`Ech sinn ${withArticle('robin')}. Wien ass meng Cousine?`},
+    {speaker:"robin", word:"mamm", target:"jeanne"},
+    {speaker:"robin", word:"papp", target:"jean"},
+    {speaker:"robin", word:"bom", target:"katrine"},
+    {speaker:"robin", word:"bop", target:"rene"},
+    {speaker:"robin", word:"monni", target:"romain"},
+    {speaker:"robin", word:"tatta", target:"josiane"},
+    {speaker:"robin", word:"cousine", target:"elisa"},
 
-    {speaker:'jean', word:'mamm', target:'katrine',  text:`Ech sinn ${withArticle('jean')}. Wien ass meng Mamm?`},
-    {speaker:'jean', word:'papp', target:'rene',     text:`Ech sinn ${withArticle('jean')}. Wien ass mäi Papp?`},
-    {speaker:'jean', word:'fra',  target:'jeanne',   text:`Ech sinn ${withArticle('jean')}. Wien ass meng Fra?`},
-    {speaker:'jean', word:'bouf', target:'robin',    text:`Ech sinn ${withArticle('jean')}. Wien ass mäi Bouf?`},
+    {speaker:"jean", word:"mamm", target:"katrine"},
+    {speaker:"jean", word:"papp", target:"rene"},
+    {speaker:"jean", word:"fra", target:"jeanne"},
+    {speaker:"jean", word:"bouf", target:"robin"},
 
-    {speaker:'josiane', word:'mamm', target:'katrine', text:`Ech sinn ${withArticle('josiane')}. Wien ass meng Mamm?`},
-    {speaker:'josiane', word:'papp', target:'rene',    text:`Ech sinn ${withArticle('josiane')}. Wien ass mäi Papp?`},
-    {speaker:'josiane', word:'mann', target:'romain',  text:`Ech sinn ${withArticle('josiane')}. Wien ass mäi Mann?`},
-    {speaker:'josiane', word:'duechter', target:'elisa',text:`Ech sinn ${withArticle('josiane')}. Wien ass meng Duechter?`},
+    {speaker:"josiane", word:"mamm", target:"katrine"},
+    {speaker:"josiane", word:"papp", target:"rene"},
+    {speaker:"josiane", word:"mann", target:"romain"},
+    {speaker:"josiane", word:"duechter", target:"elisa"},
 
-    {speaker:'jeanne', word:'mann', target:'jean',    text:`Ech sinn ${withArticle('jeanne')}. Wien ass mäi Mann?`},
-    {speaker:'jeanne', word:'bouf', target:'robin',   text:`Ech sinn ${withArticle('jeanne')}. Wien ass mäi Bouf?`},
+    {speaker:"jeanne", word:"mann", target:"jean"},
+    {speaker:"jeanne", word:"bouf", target:"robin"}
   ];
 
   function buildItems(){
-    const many = [];
+    const many=[];
     while(many.length < total) many.push(...BANK);
-    items = shuffle(many).slice(0, total);
+    items = shuffle(many).slice(0,total);
+  }
+
+  function clearFeedback(){
+    $("#g1Status").textContent = "Lauschter";
+  }
+
+  function setCardState(card, state){
+    card.style.background = state==="good" ? "rgba(183,240,200,.55)" : state==="bad" ? "rgba(255,204,204,.60)" : "#fff";
+    card.style.borderColor = state==="good" ? "rgba(183,240,200,.0)" : state==="bad" ? "rgba(255,204,204,.0)" : "rgba(31,31,31,.35)";
   }
 
   function render(){
     current = items[round];
-    $('#g1Prog').textContent = `${round+1} vun ${total}`;
-    $('#g1Status').textContent = 'Lauschter';
-    $('#g1Text').textContent = current.text;
-    $('#g1SpeakerImg').src = PEOPLE[current.speaker].img;
     canAnswer = true;
+    $("#g1Prog").textContent = `${round+1} vun ${total}`;
+    clearFeedback();
+    $("#g1SpeakerImg").src = PEOPLE[current.speaker].img;
+
+    setTimeout(()=>{ play(); }, 120);
   }
 
-  function handleClick(personId, cardEl){
-    if(!canAnswer) return;
+  function play(){
+    if(!current) return;
+    playWordAudio(current.word);
+  }
+
+  function handleClick(personId, btnEl){
+    if(!canAnswer || !current) return;
     const good = (personId === current.target);
-    flashCard(cardEl, good);
-    $('#g1Status').textContent = good ? 'Richteg' : 'Probéier nach eng Kéier';
+
+    setCardState(btnEl, good ? "good" : "bad");
+    $("#g1Status").textContent = good ? "Richteg" : "Probéier nach eng Kéier";
+
+    setTimeout(()=>setCardState(btnEl, "none"), 420);
+
     if(good){
-      canAnswer=false;
+      canAnswer = false;
       setTimeout(()=>{
         round++;
         if(round>=total){
-          $('#g1Status').textContent='Fäerdeg';
-          $('#g1Text').textContent='Alles richteg.';
+          $("#g1Status").textContent = "Fäerdeg";
           return;
         }
         render();
@@ -760,52 +595,101 @@ const g1 = (()=> {
     }
   }
 
+  function buildStage(){
+    applyFamilyBg();
+    const stage = $("#famStage");
+    // remove old people
+    $$(".pCard", stage).forEach(n=>n.remove());
+
+    Object.keys(POS).forEach(id=>{
+      const p = document.createElement("button");
+      p.type="button";
+      p.className="pCard";
+      p.setAttribute("aria-label", PEOPLE[id].name);
+      p.style.position = "absolute";
+      p.style.left = POS[id].x + "%";
+      p.style.top  = POS[id].y + "%";
+      p.style.transform = "translate(-50%,-50%)";
+      p.style.width = "16%";
+      p.style.minWidth = "92px";
+      p.style.maxWidth = "150px";
+      p.style.border = "var(--border) solid rgba(31,31,31,.35)";
+      p.style.borderRadius = "14px";
+      p.style.background = "#fff";
+      p.style.boxShadow = "0 6px 16px rgba(0,0,0,.08)";
+      p.style.cursor = "pointer";
+      p.style.padding = "8px";
+      p.style.display = "grid";
+      p.style.gap = "6px";
+      p.style.justifyItems = "center";
+      p.style.zIndex = 2;
+
+      const img = document.createElement("img");
+      img.src = PEOPLE[id].img;
+      img.alt = PEOPLE[id].name;
+      img.style.width = "100%";
+      img.style.aspectRatio = "1/1";
+      img.style.objectFit = "cover";
+      img.style.borderRadius = "10px";
+      img.style.border = "2px solid rgba(31,31,31,.12)";
+      img.style.background = "#fff";
+
+      const name = document.createElement("div");
+      name.textContent = PEOPLE[id].name;
+      name.style.fontSize = "1.05rem";
+      name.style.lineHeight = "1";
+      name.style.textAlign = "center";
+
+      p.appendChild(img);
+      p.appendChild(name);
+
+      p.addEventListener("click", ()=>handleClick(id, p));
+      stage.appendChild(p);
+    });
+  }
+
   function restart(){
     round=0;
     buildItems();
+    buildStage();
     render();
   }
 
   function ensure(){
     if(started) return;
-    started=true;
-    buildFamilyStage($('#fam1'), handleClick);
-    $('#g1Play').addEventListener('click', ()=>{ if(current) playWordAudio(current.word); });
-    $('#g1Restart').addEventListener('click', restart);
+    started = true;
+    $("#g1ListenBtn").addEventListener("click", play);
     restart();
   }
 
-  return {ensure};
+  return {ensure, restart, play};
 })();
 
-/* =========================
-   GAME 2: Lauschter a schreif (auto play + click letters)
-========================= */
+/* ===== GAME 2: Listen + build word (tap letters) ===== */
 const g2 = (()=> {
   let started=false;
   let round=0;
   const total=20;
 
   const WORDS = [
-    {key:'mamm', word:'MAMM'},
-    {key:'papp', word:'PAPP'},
-    {key:'bom', word:'BOM'},
-    {key:'bop', word:'BOP'},
-    {key:'monni', word:'MONNI'},
-    {key:'tatta', word:'TATTA'},
-    {key:'brudder', word:'BRUDDER'},
-    {key:'schwester', word:'SCHWESTER'},
-    {key:'cousin', word:'COUSIN'},
-    {key:'cousine', word:'COUSINE'},
-    {key:'duechter', word:'DUECHTER'},
-    {key:'bouf', word:'BOUF'},
-    {key:'fra', word:'FRA'},
-    {key:'mann', word:'MANN'},
+    {key:"mamm", word:"MAMM"},
+    {key:"papp", word:"PAPP"},
+    {key:"bom", word:"BOM"},
+    {key:"bop", word:"BOP"},
+    {key:"monni", word:"MONNI"},
+    {key:"tatta", word:"TATTA"},
+    {key:"brudder", word:"BRUDDER"},
+    {key:"schwester", word:"SCHWESTER"},
+    {key:"cousin", word:"COUSIN"},
+    {key:"cousine", word:"COUSINE"},
+    {key:"duechter", word:"DUECHTER"},
+    {key:"bouf", word:"BOUF"},
+    {key:"fra", word:"FRA"},
+    {key:"mann", word:"MANN"}
   ];
 
   let items=[], current=null;
-  let picked=[];        // per slot
-  let slots=[];
+  let picked=[], slots=[];
 
   function buildItems(){
     const many=[];
@@ -814,23 +698,35 @@ const g2 = (()=> {
   }
 
   function makeSlots(n){
-    const holder = $('#g2Slots');
-    holder.innerHTML='';
-    slots=[];
-    picked = new Array(n).fill('');
+    const holder = $("#g2Slots");
+    holder.innerHTML = "";
+    slots = [];
+    picked = new Array(n).fill("");
+
     for(let i=0;i<n;i++){
-      const s = document.createElement('button');
-      s.type='button';
-      s.className='letterSlot';
-      s.setAttribute('aria-label','Buschtaf');
-      s.addEventListener('click', ()=>{
-        // remove letter from this slot
+      const s = document.createElement("button");
+      s.type="button";
+      s.setAttribute("aria-label","Buschtaf");
+      s.style.width = "46px";
+      s.style.height = "52px";
+      s.style.borderRadius = "14px";
+      s.style.border = "2px dashed rgba(31,31,31,.30)";
+      s.style.background = "rgba(231,245,255,.65)";
+      s.style.display = "grid";
+      s.style.placeItems = "center";
+      s.style.fontFamily = "'Schoulschrëft', Arial, sans-serif";
+      s.style.fontSize = "1.8rem";
+      s.style.cursor = "pointer";
+
+      s.addEventListener("click", ()=>{
         if(!picked[i]) return;
-        picked[i]='';
-        s.textContent='';
-        s.classList.remove('filled');
-        $('#g2Helper').textContent='Weider…';
+        picked[i] = "";
+        s.textContent = "";
+        s.style.borderStyle = "dashed";
+        s.style.background = "rgba(231,245,255,.65)";
+        $("#g2Helper").textContent = "Lauschter…";
       });
+
       holder.appendChild(s);
       slots.push(s);
     }
@@ -841,36 +737,49 @@ const g2 = (()=> {
   }
 
   function currentString(){
-    return picked.join('');
+    return picked.join("");
   }
 
   function buildBank(){
-    const bank = $('#g2Bank');
-    bank.innerHTML='';
-    // required letters only, randomized
-    shuffle(current.word.split('')).forEach(ch=>{
-      const b = document.createElement('button');
-      b.type='button';
-      b.className='letterBtn';
-      b.textContent=ch;
-      b.addEventListener('click', ()=>{
-        const idx = nextEmptyIndex();
-        if(idx<0) return;
-        picked[idx]=ch;
-        slots[idx].textContent=ch;
-        slots[idx].classList.add('filled');
+    const bank = $("#g2Bank");
+    bank.innerHTML = "";
 
-        if(nextEmptyIndex()<0){
+    const letters = shuffle(current.word.split(""));
+    letters.forEach(ch=>{
+      const b = document.createElement("button");
+      b.type="button";
+      b.textContent = ch;
+      b.style.width = "56px";
+      b.style.height = "56px";
+      b.style.borderRadius = "18px";
+      b.style.border = "var(--border) solid rgba(31,31,31,.35)";
+      b.style.background = "linear-gradient(180deg,#ffffff 0%, #f3fbff 100%)";
+      b.style.cursor = "pointer";
+      b.style.fontFamily = "'Schoulschrëft', Arial, sans-serif";
+      b.style.fontSize = "1.9rem";
+      b.style.display = "grid";
+      b.style.placeItems = "center";
+      b.style.boxShadow = "0 6px 16px rgba(0,0,0,.08)";
+
+      b.addEventListener("click", ()=>{
+        const idx = nextEmptyIndex();
+        if(idx < 0) return;
+        picked[idx] = ch;
+        slots[idx].textContent = ch;
+        slots[idx].style.borderStyle = "solid";
+        slots[idx].style.background = "#fff";
+
+        if(nextEmptyIndex() < 0){
           const ok = (currentString() === current.word);
-          $('#g2Helper').textContent = ok ? 'Richteg!' : 'Probéier nach eng Kéier';
-          flash($('#g2Helper'), ok);
+          $("#g2Helper").textContent = ok ? "Richteg" : "Probéier nach eng Kéier";
+          flashBadge($("#g2Helper"), ok);
 
           if(ok){
             setTimeout(()=>{
               round++;
               if(round>=total){
-                $('#g2Helper').textContent='Alles richteg!';
-                $('#g2Bank').innerHTML='';
+                $("#g2Helper").textContent = "Fäerdeg";
+                $("#g2Bank").innerHTML = "";
                 return;
               }
               render();
@@ -878,6 +787,7 @@ const g2 = (()=> {
           }
         }
       });
+
       bank.appendChild(b);
     });
   }
@@ -889,14 +799,11 @@ const g2 = (()=> {
 
   function render(){
     current = items[round];
-    $('#g2Prog').textContent = `${round+1} vun ${total}`;
-    $('#g2Helper').textContent='Lauschter…';
-
+    $("#g2Prog").textContent = `${round+1} vun ${total}`;
+    $("#g2Helper").textContent = "Lauschter…";
     makeSlots(current.word.length);
     buildBank();
-
-    // auto play after UI is ready
-    setTimeout(play, 120);
+    setTimeout(()=>play(), 120);
   }
 
   function restart(){
@@ -907,25 +814,435 @@ const g2 = (()=> {
 
   function ensure(){
     if(started) return;
-    started=true;
+    started = true;
+    $("#g2ListenBtn").addEventListener("click", play);
+    restart();
+  }
 
-    $('#g2Listen').addEventListener('click', play);
-    $('#g2Restart').addEventListener('click', restart);
+  return {ensure, restart, play};
+})();
+
+/* ===== GAME 3: Who am I (examples) ===== */
+const g3 = (()=> {
+  let started=false;
+  let round=0;
+  const total=16;
+  let items=[], current=null;
+
+  const BANK = [
+    {answer:"elisa", clue:"Ech si kleng. Meng Mamm ass d'Josiane."},
+    {answer:"robin", clue:"Ech si kleng. Mäi Papp ass de Jean."},
+    {answer:"jean", clue:"Meng Fra ass d'Jeanne."},
+    {answer:"jeanne", clue:"Mäi Bouf ass de Robin."},
+    {answer:"josiane", clue:"Meng Duechter ass d'Elisa."},
+    {answer:"romain", clue:"Meng Fra ass d'Josiane."},
+    {answer:"katrine", clue:"Mäi Mann ass de René."},
+    {answer:"rene", clue:"Meng Fra ass d'Katrine."},
+    {answer:"elisa", clue:"Mäi Cousin ass de Robin."},
+    {answer:"robin", clue:"Meng Cousine ass d'Elisa."},
+    {answer:"jean", clue:"Meng Mamm ass d'Katrine."},
+    {answer:"josiane", clue:"Mäi Papp ass de René."},
+    {answer:"jeanne", clue:"Mäi Mann ass de Jean."},
+    {answer:"romain", clue:"Mäi Kand ass d'Elisa."},
+    {answer:"katrine", clue:"Ech hu zwee Kanner: d'Josiane an de Jean."},
+    {answer:"rene", clue:"Ech si Bop vun der Elisa."}
+  ];
+
+  function buildItems(){
+    items = shuffle(BANK).slice(0,total);
+  }
+
+  function render(){
+    current = items[round];
+    $("#g3Prog").textContent = `${round+1} vun ${total}`;
+    $("#g3Status").textContent = "Wielt";
+    $("#g3Clue").textContent = current.clue;
+
+    const optsHolder = $("#g3Options");
+    optsHolder.innerHTML = "";
+
+    const allIds = Object.keys(PEOPLE);
+    const distractors = shuffle(allIds.filter(id=>id!==current.answer)).slice(0,3);
+    const options = shuffle([current.answer, ...distractors]);
+
+    options.forEach(id=>{
+      const b = document.createElement("button");
+      b.type="button";
+      b.textContent = PEOPLE[id].name;
+      b.style.border = "var(--border) solid rgba(31,31,31,.35)";
+      b.style.background = "linear-gradient(180deg,#ffffff 0%, #f3fbff 100%)";
+      b.style.borderRadius = "18px";
+      b.style.padding = "12px 14px";
+      b.style.cursor = "pointer";
+      b.style.fontSize = "1.15rem";
+      b.style.fontFamily = "'Schoulschrëft', Arial, sans-serif";
+      b.style.boxShadow = "0 6px 16px rgba(0,0,0,.08)";
+
+      b.addEventListener("click", ()=>{
+        const ok = (id === current.answer);
+        $("#g3Status").textContent = ok ? "Richteg" : "Probéier nach eng Kéier";
+        flashBadge($("#g3Status"), ok);
+
+        if(ok){
+          setTimeout(()=>{
+            round++;
+            if(round>=total){
+              $("#g3Status").textContent = "Fäerdeg";
+              optsHolder.innerHTML = "";
+              return;
+            }
+            render();
+          }, 520);
+        }
+      });
+
+      optsHolder.appendChild(b);
+    });
+  }
+
+  function restart(){
+    round=0;
+    buildItems();
+    render();
+  }
+
+  function ensure(){
+    if(started) return;
+    started = true;
+    restart();
+  }
+
+  return {ensure, restart};
+})();
+
+/* ===== GAME 4: Mäi oder meng (examples; fixed option order) ===== */
+const g4 = (()=> {
+  let started=false;
+  let round=0;
+  const total=16;
+  let items=[], current=null;
+
+  const BANK = [
+    {noun:"Papp", gender:"m"},
+    {noun:"Monni", gender:"m"},
+    {noun:"Bop", gender:"m"},
+    {noun:"Mann", gender:"m"},
+    {noun:"Bouf", gender:"m"},
+    {noun:"Brudder", gender:"m"},
+    {noun:"Cousin", gender:"m"},
+    {noun:"Mamm", gender:"f"},
+    {noun:"Bom", gender:"f"},
+    {noun:"Tatta", gender:"f"},
+    {noun:"Fra", gender:"f"},
+    {noun:"Duechter", gender:"f"},
+    {noun:"Schwëster", gender:"f"},
+    {noun:"Cousine", gender:"f"},
+    {noun:"Mamm", gender:"f"},
+    {noun:"Papp", gender:"m"}
+  ];
+
+  function buildItems(){
+    items = shuffle(BANK).slice(0,total);
+  }
+
+  function render(){
+    current = items[round];
+    $("#g4Prog").textContent = `${round+1} vun ${total}`;
+    $("#g4Status").textContent = "Wielt";
+    $("#g4Line").textContent = `Ech soen: ___ ${current.noun}.`;
+
+    const holder = $("#g4Options");
+    holder.innerHTML = "";
+
+    const opts = [
+      {label:"mäi", key:"mai"},
+      {label:"meng", key:"meng"}
+    ];
+
+    opts.forEach(o=>{
+      const b = document.createElement("button");
+      b.type="button";
+      b.textContent = o.label;
+      b.style.border = "var(--border) solid rgba(31,31,31,.35)";
+      b.style.background = "linear-gradient(180deg,#ffffff 0%, #f3fbff 100%)";
+      b.style.borderRadius = "18px";
+      b.style.padding = "12px 14px";
+      b.style.cursor = "pointer";
+      b.style.fontSize = "1.15rem";
+      b.style.fontFamily = "'Schoulschrëft', Arial, sans-serif";
+      b.style.boxShadow = "0 6px 16px rgba(0,0,0,.08)";
+
+      b.addEventListener("click", ()=>{
+        const correct = (current.gender === "m") ? "mäi" : "meng";
+        const ok = (o.label === correct);
+        $("#g4Status").textContent = ok ? "Richteg" : "Probéier nach eng Kéier";
+        flashBadge($("#g4Status"), ok);
+
+        if(ok){
+          setTimeout(()=>{
+            round++;
+            if(round>=total){
+              $("#g4Status").textContent = "Fäerdeg";
+              holder.innerHTML = "";
+              return;
+            }
+            render();
+          }, 520);
+        }
+      });
+
+      holder.appendChild(b);
+    });
+  }
+
+  function restart(){
+    round=0;
+    buildItems();
+    render();
+  }
+
+  function ensure(){
+    if(started) return;
+    started = true;
+    restart();
+  }
+
+  return {ensure, restart};
+})();
+
+/* ===== GAME 5: Build question with pronoun + word + person context ===== */
+const g5 = (()=> {
+  let started=false;
+  let round=0;
+  const total=18;
+  let items=[], current=null;
+
+  let selectedPron = "";
+  let selectedRel  = "";
+  let selectedPerson = "";
+
+  const PRONOUNS = [
+    {label:"meng", person:"1", gender:"f"},
+    {label:"mäi",  person:"1", gender:"m"},
+    {label:"deng", person:"2", gender:"f"},
+    {label:"däi",  person:"2", gender:"m"},
+    {label:"seng", person:"3", gender:"f"},
+    {label:"säi",  person:"3", gender:"m"}
+  ];
+
+  const PEOPLE_IDS = Object.keys(PEOPLE);
+
+  function buildItems(){
+    const relKeys = REL_WORDS.map(r=>r.key);
+
+    const makePrompt = (personNum)=>{
+      const relKey = relKeys[Math.floor(Math.random()*relKeys.length)];
+      const rel = REL_BY_KEY[relKey];
+      const pron = PRONOUNS.find(p=>p.person===String(personNum) && p.gender===rel.gender).label;
+      const who = PEOPLE_IDS[Math.floor(Math.random()*PEOPLE_IDS.length)];
+      return {who, personNum, relKey, correctPron:pron};
+    };
+
+    const many=[];
+    while(many.length < total){
+      many.push(makePrompt(1));
+      many.push(makePrompt(2));
+      many.push(makePrompt(3));
+    }
+    items = shuffle(many).slice(0,total);
+  }
+
+  function resetPick(){
+    selectedPron = "";
+    selectedRel = "";
+    selectedPerson = "";
+    $("#g5SlotPron").textContent = "___";
+    $("#g5SlotRel").textContent = "___";
+    $("#g5Status").textContent = "Baue";
+    $("#g5Answer").style.display = "none";
+    $("#g5Answer").textContent = "";
+    $$(".g5Pill").forEach(b=>setPillState(b,false));
+  }
+
+  function buildPronPills(){
+    const holder = $("#g5PronOpts");
+    holder.innerHTML = "";
+    PRONOUNS.forEach(p=>{
+      const b = document.createElement("button");
+      b.type="button";
+      b.className="g5Pill";
+      b.textContent = p.label;
+      b.style.border = "var(--border) solid rgba(31,31,31,.35)";
+      b.style.background = "#fff";
+      b.style.borderRadius = "999px";
+      b.style.padding = "10px 14px";
+      b.style.cursor = "pointer";
+      b.style.fontSize = "1.12rem";
+      b.style.fontFamily = "'Schoulschrëft', Arial, sans-serif";
+      b.style.boxShadow = "0 5px 16px rgba(0,0,0,.07)";
+
+      b.addEventListener("click", ()=>{
+        selectedPron = p.label;
+        $("#g5SlotPron").textContent = p.label;
+        $$(".g5Pill", holder).forEach(x=>setPillState(x,false));
+        setPillState(b,true);
+      });
+
+      holder.appendChild(b);
+    });
+  }
+
+  function buildPeoplePills(){
+    const holder = $("#g5PeopleOpts");
+    holder.innerHTML = "";
+    PEOPLE_IDS.forEach(id=>{
+      const b = document.createElement("button");
+      b.type="button";
+      b.className="g5Pill";
+      b.textContent = PEOPLE[id].name;
+      b.style.border = "var(--border) solid rgba(31,31,31,.35)";
+      b.style.background = "#fff";
+      b.style.borderRadius = "999px";
+      b.style.padding = "10px 14px";
+      b.style.cursor = "pointer";
+      b.style.fontSize = "1.12rem";
+      b.style.fontFamily = "'Schoulschrëft', Arial, sans-serif";
+      b.style.boxShadow = "0 5px 16px rgba(0,0,0,.07)";
+
+      b.addEventListener("click", ()=>{
+        selectedPerson = id;
+        $$(".g5Pill", holder).forEach(x=>setPillState(x,false));
+        setPillState(b,true);
+      });
+
+      holder.appendChild(b);
+    });
+  }
+
+  function buildRelPills(){
+    const holder = $("#g5RelOpts");
+    holder.innerHTML = "";
+    REL_WORDS.forEach(r=>{
+      const b = document.createElement("button");
+      b.type="button";
+      b.className="g5Pill";
+      b.textContent = r.label;
+      b.style.border = "var(--border) solid rgba(31,31,31,.35)";
+      b.style.background = "#fff";
+      b.style.borderRadius = "999px";
+      b.style.padding = "10px 14px";
+      b.style.cursor = "pointer";
+      b.style.fontSize = "1.12rem";
+      b.style.fontFamily = "'Schoulschrëft', Arial, sans-serif";
+      b.style.boxShadow = "0 5px 16px rgba(0,0,0,.07)";
+
+      b.addEventListener("click", ()=>{
+        selectedRel = r.key;
+        $("#g5SlotRel").textContent = r.label;
+        $$(".g5Pill", holder).forEach(x=>setPillState(x,false));
+        setPillState(b,true);
+      });
+
+      holder.appendChild(b);
+    });
+  }
+
+  function render(){
+    current = items[round];
+    $("#g5Prog").textContent = `${round+1} vun ${total}`;
+
+    const modeLabel = current.personNum === 1 ? "Ech" : current.personNum === 2 ? "Du" : "Hien / Hatt";
+    $("#g5Context").textContent = `Perspektiv: ${modeLabel}. Persoun: ${PEOPLE[current.who].name}.`;
+
+    resetPick();
+  }
+
+  function check(){
+    if(!current) return;
+
+    const rel = REL_BY_KEY[current.relKey];
+    const correctRelLabel = rel ? rel.label : "";
+    const correctPron = current.correctPron;
+
+    const hasAll = selectedPron && selectedRel && selectedPerson;
+
+    if(!hasAll){
+      $("#g5Status").textContent = "Fëll alles aus";
+      flashBadge($("#g5Status"), false);
+      return;
+    }
+
+    const okPerson = (selectedPerson === current.who);
+    const okRel = (selectedRel === current.relKey);
+    const okPron = (selectedPron === correctPron);
+
+    const ok = okPerson && okRel && okPron;
+
+    $("#g5Status").textContent = ok ? "Richteg" : "Probéier nach eng Kéier";
+    flashBadge($("#g5Status"), ok);
+
+    const built = `Wéi heescht ${selectedPron} ${REL_BY_KEY[selectedRel].label}?`;
+    $("#g5Answer").style.display = "block";
+    $("#g5Answer").textContent = ok
+      ? built
+      : `Kuck nach eng Kéier. Richteg ass: Wéi heescht ${correctPron} ${correctRelLabel}?`;
+
+    if(ok){
+      setTimeout(()=>{
+        round++;
+        if(round>=total){
+          $("#g5Status").textContent = "Fäerdeg";
+          return;
+        }
+        render();
+      }, 720);
+    }
+  }
+
+  function restart(){
+    round=0;
+    buildItems();
+    buildPronPills();
+    buildPeoplePills();
+    buildRelPills();
+    render();
+  }
+
+  function ensure(){
+    if(started) return;
+    started = true;
+
+    buildPronPills();
+    buildPeoplePills();
+    buildRelPills();
+
+    $("#g5Check").addEventListener("click", check);
 
     restart();
   }
 
-  return {ensure};
+  return {ensure, restart};
 })();
 
-/* =========================
-   GAME 3 / 4 / 5 placeholders
-   (kept here minimal – you already have them in your big file)
-   NOTE: If you paste this into your full file, keep your g3/g4/g5 logic below.
-========================= */
+/* ===== TOP BUTTONS behavior ===== */
+document.getElementById("prev").onclick = ()=>showStep(stepIndex - 1);
+document.getElementById("next").onclick = ()=>showStep(stepIndex + 1);
 
-/* start */
-showGame(0);
+document.getElementById("play").onclick = ()=>{
+  if(stepIndex===0) g1.play();
+  else if(stepIndex===1) g2.play();
+};
+
+document.getElementById("replay").onclick = ()=>{
+  if(stepIndex===0) g1.restart();
+  else if(stepIndex===1) g2.restart();
+  else if(stepIndex===2) g3.restart();
+  else if(stepIndex===3) g4.restart();
+  else if(stepIndex===4) g5.restart();
+};
+
+/* ===== START ===== */
+showStep(0);
 </script>
 
 </body>
